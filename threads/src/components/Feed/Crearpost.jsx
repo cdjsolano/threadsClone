@@ -14,11 +14,28 @@ export function Crearpost({ onPostCreated }) {
 
     setIsSubmitting(true);
     try {
+
+      const { error: userError } = await supabase
+        .from('threadUsers')
+        .upsert(
+          {
+            id: user.id,
+            username: user.user_metadata.user_name || user.email.split('@')[0],
+            fullName: user.user_metadata.full_name || '',
+            userEmail: user.email,
+            avatar_url: user.user_metadata.avatar_url || ''
+          },
+          { onConflict: 'id' }
+        );
+
+      if (userError) throw userError;
+
+
       const { error } = await supabase
         .from('post')
         .insert([{ 
           content, 
-          user_id: user.id 
+          user_id: user.id
         }]);
 
       if (error) throw error;
