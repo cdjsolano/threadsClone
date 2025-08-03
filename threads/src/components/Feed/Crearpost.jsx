@@ -1,47 +1,60 @@
-import React, { useState } from 'react';
-import { createPost } from '../../Supabase/services/postService';
-import Feed from './Feed';
-import { useAuth } from "../../context/AuthContext"; // Importa el contexto
-import { supabase } from "../../../supabaseClient"; // Asegúrate de que la ruta es correcta
+import { useState } from 'react';
+import { supabase } from '../../../supabaseClient';
+import { useAuth } from '../../context/AuthContext';
+import { toast } from 'react-toastify';
 
-export function Crearpost({ onPostCreated }) { // Recibe callback para refrescar posts
-  const [content, setContent] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const { user } = useAuth(); // Usa el contexto
+export function Crearpost({ onPostCreated }) {
+  const { user } = useAuth();
+  const [content, setContent] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!content.trim() || !user) return; // Valida contenido y usuario
+    if (!content.trim() || !user) return;
 
-    setIsLoading(true);
-    const { error } = await supabase
-      .from("posts")
-      .insert([{ content, user_id: user.id }]); // Usa user.id del contexto
+    setIsSubmitting(true);
+    try {
+      const { error } = await supabase
+        .from('post')
+        .insert([{ 
+          content, 
+          user_id: user.id 
+        }]);
 
-    setIsLoading(false);
-    
-    if (error) {
-      console.error("Error al crear el post:", error.message);
-      // Aquí podrías añadir un toast de error (ej: react-toastify)
-    } else {
-      setContent(""); // Limpia el textarea
-      onPostCreated?.(); // Llama al callback para refrescar el feed
+      if (error) throw error;
+      
+      toast.success('¡Post creado exitosamente!');
+      setContent('');
+      onPostCreated?.(); // Notificar al componente padre
+    } catch (error) {
+      toast.error('Error al crear el post');
+      console.error('Error:', error.message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="crear-post">
+    <form onSubmit={handleSubmit} className="create-post-form">
       <textarea
-        placeholder="¿Qué está pasando?"
+        placeholder="¿Qué estás pensando?"
         value={content}
         onChange={(e) => setContent(e.target.value)}
-        disabled={isLoading} // Deshabilita durante el envío
+        disabled={isSubmitting}
+        maxLength={500}
       />
-      <button type="submit" disabled={!content.trim() || isLoading}>
-        {isLoading ? "Publicando..." : "Publicar"}
-      </button>
+      <div className="form-footer">
+        <span className="char-counter">{content.length}/500</span>
+        <button 
+          type="submit" 
+          disabled={!content.trim() || isSubmitting}
+          className="submit-button"
+        >
+          {isSubmitting ? 'Publicando...' : 'Publicar'}
+        </button>
+      </div>
     </form>
   );
 }
 
-export default Crearpost;
+export default Crearpost
