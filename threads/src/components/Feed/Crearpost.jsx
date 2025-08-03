@@ -1,48 +1,47 @@
 import React, { useState } from 'react';
 import { createPost } from '../../Supabase/services/postService';
 import Feed from './Feed';
+import { useAuth } from "../../context/AuthContext"; // Importa el contexto
+import { supabase } from "../../../supabaseClient"; // Asegúrate de que la ruta es correcta
 
-const Crearpost = ({ actualUser, onPostCreated }) => {
-  const [content, setContent] = useState('');
-  const [loading, setLoading] = useState(false);
- 
+export function Crearpost({ onPostCreated }) { // Recibe callback para refrescar posts
+  const [content, setContent] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const { user } = useAuth(); // Usa el contexto
 
-  const handlePost = async () => {
-    if (!actualUser) {
-    console.error('Usuario no logueado');
-    return;
-  }
-    console.log(content)
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!content.trim() || !user) return; // Valida contenido y usuario
+
+    setIsLoading(true);
+    const { error } = await supabase
+      .from("posts")
+      .insert([{ content, user_id: user.id }]); // Usa user.id del contexto
+
+    setIsLoading(false);
     
-    if (!content.trim()) return;
-    setLoading(true);
-    try {
-      const newPost = await createPost(content);
-      setContent('');
-      if (onPostCreated) onPostCreated(newPost); // Recargar feed
-    } catch (error) {
-      console.error('Error al crear post:', error.message);
-    } finally {
-      setLoading(false);
+    if (error) {
+      console.error("Error al crear el post:", error.message);
+      // Aquí podrías añadir un toast de error (ej: react-toastify)
+    } else {
+      setContent(""); // Limpia el textarea
+      onPostCreated?.(); // Llama al callback para refrescar el feed
     }
-    <Feed newPost={content}></Feed>
   };
-  
 
   return (
-    <div className="create-post">
+    <form onSubmit={handleSubmit} className="crear-post">
       <textarea
+        placeholder="¿Qué está pasando?"
         value={content}
         onChange={(e) => setContent(e.target.value)}
-        placeholder="¿Qué estás pensando?"
-        rows={4}
+        disabled={isLoading} // Deshabilita durante el envío
       />
-      <br />
-      <button onClick={handlePost} disabled={loading}>
-        {loading ? 'Publicando...' : 'Publicar'}
+      <button type="submit" disabled={!content.trim() || isLoading}>
+        {isLoading ? "Publicando..." : "Publicar"}
       </button>
-    </div>
+    </form>
   );
-};
+}
 
 export default Crearpost;

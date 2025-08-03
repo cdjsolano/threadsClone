@@ -3,6 +3,7 @@ import './App.css'
 import React from 'react'
 import { Routes, Route, Link } from 'react-router-dom'
 import Home from '../src/pages/Home'
+import { AuthProvider } from '../src/context/AuthContext'
 
 function App() {
 
@@ -11,16 +12,18 @@ function App() {
 
   return (
     
-    <>
-
+    
+   <AuthProvider>
     <Routes>
 
       <Route path="/" element={<Home />} />
 
 
     </Routes>
-    </>
-  )
+    </AuthProvider>
+  
+    
+  );
 }
 
 export default App

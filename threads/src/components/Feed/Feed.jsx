@@ -1,69 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { fetchAllPosts } from '../../Supabase/services/postService.js';
-import PostCard from '../Shared/postList';
-import Crearpost from './Crearpost.jsx';
-import { supabase } from '../../../supabaseClient.js';
+import { useAuth } from "../../context/AuthContext"; // Importa el contexto
+import { usePosts } from "../Shared/usePost"; // Custom hook para fetch de posts
+import { Post } from "./Post";
 
+export function Feed() {
+  const { user } = useAuth(); // Usuario desde contexto (¡elimina el useState innecesario!)
+  const { posts, loading, error, refetch } = usePosts(); // Lógica reutilizable
 
-const Feed = (actualUser, newPost) => {
-  const [posts, setPosts] = useState([]);
-  const [userActual, setuseractual] = useState('')
-  const [loading, setLoading] = useState(true);
-  const [usuario, setUsuario] = useState(null);
-  
-      useEffect(() => {
-          async function obtenerUsuario() {
-              const { data, error } = await supabase.auth.getUser();
-  
-              if (error) {
-                  console.error("Error al obtener usuario:", error.message);
-              } else {
-                  console.log("Usuario:", data.user);
-                  const user = data.user;
-                  setUsuario(user);
-                  
-              }
-          }
-  
-        obtenerUsuario();
-      }, []);
-
- const getPosts = async () => {
-  try {
-    const data = await fetchAllPosts(newPost);
-    setPosts(data || []);
-    setuseractual(usuario)
-  } catch (err) {
-    console.error('Error cargando publicaciones:', err.message);
-    setPosts(newPost);
-  } finally {
-    setLoading(false);
-  }
-};
-
-  useEffect(() => {
-    getPosts();
-  }, []);
-
-  const handlePostCreated = (newPost) => {
-    console.log(newPost)
-    setPosts((prev) => [newPost, ...prev]);
-    console.log([posts])
-  };
-
-  if (loading) return <p>Cargando publicaciones...</p>;
+  if (loading) return <div className="loading">Cargando posts...</div>;
+  if (error) return <div className="error">Error: {error.message}</div>;
 
   return (
-    <div>
-      <h1>Para ti</h1>
-      <Crearpost onPostCreated={handlePostCreated} actualUser={[userActual]} />
-      {posts.length === 0 ? (
-        <p>No hay publicaciones aún.</p>
+    <div className="feed">
+      {posts?.length === 0 ? (
+        <p>No hay posts. ¡Sé el primero en publicar! 🚀</p>
       ) : (
-        posts.map((post) => <PostCard key={post.id} user="usuario.user_metadata.name" newPost={post} />)
+        posts?.map((post) => (
+          <Post key={post.id} post={post} currentUser={user} />
+        ))
       )}
     </div>
   );
-};
-
+}
 export default Feed;
