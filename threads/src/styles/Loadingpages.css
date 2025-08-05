@@ -1,0 +1,25 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  background-color: black;
+  height: 1000px;
+}
+
+.loader-container {
+  display: flex;
+  position: relative;
+  top: -120px;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border-radius: 50px;
+  border: none;
+  
+}
+
+.loader-container img {
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  object-fit: cover;
+}
