@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { supabase } from '../../../supabaseClient';
 import { useAuth } from '../../context/AuthContext';
 import { toast } from 'react-toastify';
+import '../../styles/threads-feed.css'
 
 export function Crearpost({ onPostCreated }) {
   const { user } = useAuth();
@@ -52,9 +53,18 @@ export function Crearpost({ onPostCreated }) {
   };
 
   return (
+
     <form onSubmit={handleSubmit} className="create-post-form">
+      <div className="post-header">
+        <img 
+          src={user.user_metadata.avatar_url || '/default-avatar.png'} 
+          alt={user.user_metadata.user_name} 
+          className="post-avatar"
+        />
+        </div>
+
       <textarea
-        placeholder="¿Qué estás pensando?"
+        placeholder="¿Qué novedades tienes?"
         value={content}
         onChange={(e) => setContent(e.target.value)}
         disabled={isSubmitting}

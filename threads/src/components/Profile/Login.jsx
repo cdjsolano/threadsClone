@@ -31,6 +31,7 @@ function Login() {
         <div>
 
             <header className="perfil-header">
+                 
                 <div className="perfil-usuario">
                     <span className='perfil-nombre'>{usuario.user_metadata.name}</span>
                     <img className='perfil-avatar'

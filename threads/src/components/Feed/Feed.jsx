@@ -4,6 +4,7 @@ import { Post } from "./Post";
 import { useEffect } from "react";
 import { supabase } from "../../../supabaseClient";
 import Crearpost from "./crearPost";
+import '../../styles/threads-feed.css'
 
 export function Feed() {
   const { user } = useAuth();

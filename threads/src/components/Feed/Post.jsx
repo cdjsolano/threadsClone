@@ -1,6 +1,7 @@
 import { memo } from "react";
 import { supabase } from "../../../supabaseClient";
-import { toast } from 'react-toastify'; // Opcional: para notificaciones
+import { toast } from 'react-toastify';
+import '../../styles/threads-feed.css'
 
 export const Post = memo(({ post, currentUser, onDelete }) => {
   const isAuthor = post.user_id === currentUser?.id;
@@ -16,16 +17,25 @@ export const Post = memo(({ post, currentUser, onDelete }) => {
 
       if (error) throw error;
       
-      // Notificar éxito
       toast.success('Post eliminado correctamente');
-      
-      // Refrescar la lista de posts
       onDelete?.();
       
     } catch (error) {
       console.error('Error al eliminar el post:', error.message);
       toast.error('Error al eliminar el post');
     }
+  };
+
+  // Función para formatear tiempo relativo
+  const getTimeAgo = (dateString) => {
+    const now = new Date();
+    const postDate = new Date(dateString);
+    const diffInMinutes = Math.floor((now - postDate) / (1000 * 60));
+    
+    if (diffInMinutes < 1) return 'ahora';
+    if (diffInMinutes < 60) return `${diffInMinutes}m`;
+    if (diffInMinutes < 1440) return `${Math.floor(diffInMinutes / 60)}h`;
+    return `${Math.floor(diffInMinutes / 1440)}d`;
   };
 
   return (
@@ -37,7 +47,12 @@ export const Post = memo(({ post, currentUser, onDelete }) => {
           className="post-avatar"
         />
         <div className="post-user-info">
-          <span className="post-username">{post.threadUsers?.username}</span>
+          <span className="post-username">
+            {post.threadUsers?.username || 'Usuario'}
+          </span>
+          <span className="post-time">
+            {getTimeAgo(post.created_at)}
+          </span>
           {isAuthor && (
             <button 
               onClick={handleDelete}
@@ -45,7 +60,7 @@ export const Post = memo(({ post, currentUser, onDelete }) => {
               aria-label="Eliminar post"
               title="Eliminar post"
             >
-              🗑️
+              ⋯
             </button>
           )}
         </div>
@@ -57,10 +72,18 @@ export const Post = memo(({ post, currentUser, onDelete }) => {
 
       <div className="post-actions">
         <button className="post-action">
-          ❤️ {post.likes_count || 0}
+          <span className="emoji">🤍</span>
+          {post.likes_count || 0}
         </button>
         <button className="post-action">
-          💬 {post.comments_count || 0}
+          <span className="emoji">💬</span>
+          {post.comments_count || 0}
+        </button>
+        <button className="post-action">
+          <span className="emoji">🔄</span>
+        </button>
+        <button className="post-action">
+           <span className="emoji"> <img src="../src/assets/Share.png" className="imgshared"/></span>
         </button>
       </div>
     </div>
