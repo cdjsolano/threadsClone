@@ -137,7 +137,7 @@ body {
 /* ===== POST INDIVIDUAL ===== */
 .post {
     position: relative;
-    top: 30px;
+    top: 5px;
     background: var(--bg-secondary);
     border-bottom: 1px solid var(--border-color);
     border-top: 1px solid var(--border-color);
