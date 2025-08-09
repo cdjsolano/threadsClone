@@ -40,7 +40,7 @@ body {
     top: 20px;
     background-image: url(/src/assets/Threads_icon.png);
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
     width: 90px;
     height: 76px;
 }
@@ -64,7 +64,7 @@ body {
     position: sticky;
     gap: 20px;
     width: 500px;
-    top: 0;
+    top: 40px;
     z-index: 100;
     backdrop-filter: blur(10px);
     align-items: center;
@@ -231,8 +231,9 @@ body {
     cursor: pointer;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 6px;
-    padding: 8px 12px;
+    padding: 7px 12px;
     border-radius: 20px;
     font-size: 14px;
     font-weight: 500;
@@ -283,16 +284,17 @@ body {
     line-height: 1.5;
 }
 
-/* ===== LISTA DE POSTS ===== */
+/* ===== ESTILOS DE PUBLICACIONES ===== */
+
 .posts-list {
     display: flex;
     flex-direction: column;
     gap: 5px;
     position: relative;
-    top: 20px;
+    top: 65px;
     justify-content: space-between;
     height: fit-content;
-    /* Sin estilos adicionales necesarios */
+   
 }
 
 /* ===== RESPONSIVE ===== */

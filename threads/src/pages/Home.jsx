@@ -5,7 +5,6 @@ import { supabase } from '../../supabaseClient.js'
 import { Auth } from '@supabase/auth-ui-react'
 import { ThemeSupa } from '@supabase/auth-ui-shared'
 import Feed from '../components/Feed/Feed.jsx'
-
 import '../styles/threads-feed.css'
 
 

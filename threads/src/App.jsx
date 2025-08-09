@@ -5,6 +5,8 @@ import { Routes, Route, Link } from 'react-router-dom'
 import Home from '../src/pages/Home'
 import { AuthProvider } from '../src/context/AuthContext'
 import Loadingpage from './components/Profile/Loadingpage'
+import { PostProvider } from './context/PostContext'
+import Profile from './pages/Profile'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -14,7 +16,7 @@ function App() {
     // Mostrar el loader por 3 segundos
     const timer = setTimeout(() => {
       setShowLoader(false);
-    }, 5000);
+    }, 8000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -25,16 +27,18 @@ function App() {
 
 
     <AuthProvider>
+      <PostProvider>
       
         {showLoader ? (
           <Loadingpage /> // Muestra el gif
         ) : (
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/Profile" element={<Profile />} />
             {/* Agrega otras rutas si las tienes */}
           </Routes>
         )}
-      
+      </PostProvider>
     </AuthProvider>
 
 
