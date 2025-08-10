@@ -1,51 +1,30 @@
 import { useAuth } from "../../context/AuthContext";
 import { usePosts } from "../Shared/usePosts";
 import { Post } from "./Post";
-import { useEffect } from "react";
-import { supabase } from "../../../supabaseClient";
 import Crearpost from "./crearPost";
-import '../../styles/threads-feed.css'
+import LoadingSpinner from "../../UI/LoadingSpinner";
+import ErrorMessage from "../../UI/ErrorMessage";
 
 export function Feed() {
   const { user } = useAuth();
-  const { posts, loading, error, refetch } = usePosts();
+  const { posts, loading, error, refetch } = usePosts(); // Nota: loadMore y hasMore también pueden eliminarse si ya no se usan
 
-  // Suscripción a cambios en tiempo real (ya bien implementado)
-  useEffect(() => {
-    const channel = supabase
-      .channel('realtime-posts')
-      .on(
-        'postgres_changes',
-        { 
-          event: '*', 
-          schema: 'public', 
-          table: 'post' 
-        },
-        () => refetch()
-      )
-      .subscribe();
-
-    return () => channel.unsubscribe();
-  }, [refetch]);
-  
-  if (loading) return <div className="loading-spinner">Cargando posts...</div>;
-  if (error) return <div className="error-message">Error: {error.message}</div>;
+  if (loading) return <LoadingSpinner message="Cargando posts..." />;
+  if (error) return <ErrorMessage error={error} />;
 
   return (
     <div className="feed-container">
-      {/* Sección de creación - Manteniendo tu lógica existente */}
-      {user && <Crearpost onPostSuccess={refetch}/>}
-
-      {/* Listado de posts - Sin cambios en tu lógica */}
+      {user && <Crearpost onPostSuccess={refetch} />}
       {posts?.length === 0 ? (
-        <div className="empty-feed-message">
-          <p>No hay posts. ¡Sé el primero en publicar! 🚀</p>
+        <div className="emptyFeed">
+          <img src="/empty-state.svg" alt="No hay posts" />
+          <p>¡El feed está vacío! <button onClick={refetch}>Recargar</button></p>
         </div>
       ) : (
-        <div className="posts-list">
+        <div className="postsList">
           {posts?.map((post) => (
             <Post 
-              key={post.id} 
+              key={`${post.id}_${post.created_at}`} // Key única compuesta (recomendado)
               post={post} 
               currentUser={user}
               onDelete={refetch}

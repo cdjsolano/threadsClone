@@ -286,12 +286,12 @@ body {
 
 /* ===== ESTILOS DE PUBLICACIONES ===== */
 
-.posts-list {
+.postsList {
     display: flex;
     flex-direction: column;
     gap: 5px;
     position: relative;
-    top: 65px;
+    top: 95px;
     justify-content: space-between;
     height: fit-content;
    

@@ -82,7 +82,11 @@ export const Post = memo(({ post, currentUser, onDelete }) => {
         {/* Botón de comentar que abre modal */}
         <button 
           className="post-action"
-          onClick={() => setSelectedPost(post)} // ← aquí guardamos el post a comentar
+          onClick={() => {
+            setSelectedPost(post);
+            document.body.style.overflow = 'hidden'; // Bloquea scroll al abrir modal
+          }}
+          aria-label="Añadir comentario"
         >
           <span className="emoji">💬</span>
           {post.comments_count || 0}

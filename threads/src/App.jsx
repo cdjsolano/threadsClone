@@ -7,6 +7,7 @@ import { AuthProvider } from '../src/context/AuthContext'
 import Loadingpage from './components/Profile/Loadingpage'
 import { PostProvider } from './context/PostContext'
 import Profile from './pages/Profile'
+import CommentModal from './components/Shared/CommentModal'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -38,6 +39,8 @@ function App() {
             {/* Agrega otras rutas si las tienes */}
           </Routes>
         )}
+
+        <CommentModal />
       </PostProvider>
     </AuthProvider>
 

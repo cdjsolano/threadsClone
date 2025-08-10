@@ -1,0 +1,124 @@
+/* Estilos para el overlay del modal */
+.comment-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Contenedor principal del modal */
+.comment-modal-content {
+  background-color: white;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  padding: 24px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Encabezado del modal */
+.comment-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.comment-modal-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Botón de cerrar */
+.comment-modal-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.comment-modal-close-btn:hover {
+  color: #4b5563;
+}
+
+/* Contenido del post */
+.comment-modal-post-content {
+  color: #4b5563;
+  margin-bottom: 16px;
+  padding: 8px;
+  background-color: #f9fafb;
+  border-radius: 4px;
+}
+
+/* Área de texto */
+.comment-modal-textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  resize: vertical;
+  min-height: 100px;
+  margin-bottom: 16px;
+}
+
+.comment-modal-textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+/* Acciones del modal */
+.comment-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+/* Botones */
+.comment-modal-cancel-btn,
+.comment-modal-submit-btn {
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.comment-modal-cancel-btn {
+  border: 1px solid #d1d5db;
+  background-color: white;
+  color: #4b5563;
+}
+
+.comment-modal-cancel-btn:hover {
+  background-color: #f3f4f6;
+}
+
+.comment-modal-submit-btn {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+}
+
+.comment-modal-submit-btn:hover {
+  background-color: #2563eb;
+}
+
+.comment-modal-submit-btn:disabled,
+.comment-modal-cancel-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.comment-modal-submit-btn--loading {
+  background-color: #93c5fd;
+}
