@@ -1,15 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { usarPost } from "../../context/PostContext";
 import { useAuth } from "../../context/AuthContext";
-import {supabase} from "../../../supabaseClient.js";
+import { supabase } from "../../../supabaseClient.js";
 import { toast } from "react-toastify";
-import "../../styles/CommentModal.css"; // Archivo CSS externo
+import "../../styles/CommentModal.css";
 
 export default function CommentModal() {
   const { selectedPost, setSelectedPost } = usarPost();
   const { user } = useAuth();
   const [commentText, setCommentText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // [FIX 1] - Manejo del scroll al montar/desmontar
+  useEffect(() => {
+       return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
+
+  const closeModal = () => {
+    setSelectedPost(null);
+    setCommentText("");
+  };
+
+  const handleClickOutside = (e) => {
+    if (e.target.classList.contains("comment-modal-overlay")) {
+      closeModal();
+    }
+  };
 
   if (!selectedPost) return null;
 
@@ -22,6 +40,16 @@ export default function CommentModal() {
     setIsSubmitting(true);
 
     try {
+      // [FIX 2] - Actualización optimista completa
+      const updatedPost = {
+        ...selectedPost,
+        commentsCount: (selectedPost.commentsCount || 0) + 1
+      };
+      
+      // Actualización inmediata en contexto
+      setSelectedPost(updatedPost);
+
+      // 1. Insertar comentario
       const { error: commentError } = await supabase
         .from("comments")
         .insert({
@@ -32,17 +60,19 @@ export default function CommentModal() {
 
       if (commentError) throw commentError;
 
+      // 2. Actualizar contador en DB
       const { error: postError } = await supabase
-        .from("posts")
-        .update({ comments_count: selectedPost.comments_count + 1 })
+        .from("post")
+        .update({ commentsCount: updatedPost.commentsCount })
         .eq("id", selectedPost.id);
 
       if (postError) throw postError;
 
       toast.success("Comentario publicado");
-      setSelectedPost(null);
-      setCommentText("");
+      closeModal();
     } catch (error) {
+      // [FIX 3] - Revertir cambios en caso de error
+      setSelectedPost(selectedPost);
       console.error("Error al comentar:", error);
       toast.error("Error al publicar comentario");
     } finally {
@@ -51,12 +81,15 @@ export default function CommentModal() {
   };
 
   return (
-    <div className="comment-modal-overlay">
-      <div className="comment-modal-content">
+    <div className="comment-modal-overlay" onClick={handleClickOutside}>
+      <div 
+        className="comment-modal-content"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="comment-modal-header">
           <h2 className="comment-modal-title">Responder a:</h2>
           <button 
-            onClick={() => setSelectedPost(null)}
+            onClick={closeModal} // [CAMBIO 8] - Usar función de cierre
             className="comment-modal-close-btn"
           >
             ✕
@@ -78,7 +111,7 @@ export default function CommentModal() {
 
         <div className="comment-modal-actions">
           <button
-            onClick={() => setSelectedPost(null)}
+            onClick={closeModal} // [CAMBIO 9] - Usar función de cierre
             className="comment-modal-cancel-btn"
             disabled={isSubmitting}
           >

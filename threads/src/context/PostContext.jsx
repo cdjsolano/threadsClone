@@ -9,8 +9,17 @@ export const PostProvider = ({ children }) => {
   const contextValue = useMemo(() => ({
     selectedPost,
     setSelectedPost,
-    // Función adicional para cerrar modal
-    closeModal: () => setSelectedPost(null) 
+    // [CAMBIO 1] - Función mejorada para cerrar modal
+    closeModal: () => {
+      setSelectedPost(null);
+    },
+    // [CAMBIO 2] - Nueva función para actualizar posts
+    updatePost: (updatedPost) => {
+      setSelectedPost(prev => {
+        // Solo actualiza si es el post seleccionado
+        return prev?.id === updatedPost.id ? updatedPost : prev;
+      });
+    }
   }), [selectedPost]);
 
   return (
@@ -20,7 +29,7 @@ export const PostProvider = ({ children }) => {
   );
 };
 
-// Hook personalizado con verificación de contexto
+// Hook personalizado con verificación de contexto (sin cambios)
 export const usarPost = () => {
   const context = useContext(PostContext);
   if (!context) {

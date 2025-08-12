@@ -7,11 +7,14 @@ import '../../styles/threads-feed.css'
 
 export const Post = memo(({ post, currentUser, onDelete }) => {
   const isAuthor = post.user_id === currentUser?.id;
-  const { setSelectedPost } = usarPost(); // ← para abrir modal de comentarios
+  
+const { selectedPost, setSelectedPost } = usarPost();
+const displayPost = selectedPost?.id === post.id ? selectedPost : post;
+
 
   const handleDelete = async () => {
     if (!window.confirm('¿Estás seguro de eliminar este post?')) return;
-    
+
     try {
       const { error } = await supabase
         .from('post')
@@ -19,10 +22,10 @@ export const Post = memo(({ post, currentUser, onDelete }) => {
         .eq('id', post.id);
 
       if (error) throw error;
-      
+
       toast.success('Post eliminado correctamente');
       onDelete?.();
-      
+
     } catch (error) {
       console.error('Error al eliminar el post:', error.message);
       toast.error('Error al eliminar el post');
@@ -34,7 +37,7 @@ export const Post = memo(({ post, currentUser, onDelete }) => {
     const now = new Date();
     const postDate = new Date(dateString);
     const diffInMinutes = Math.floor((now - postDate) / (1000 * 60));
-    
+
     if (diffInMinutes < 1) return 'ahora';
     if (diffInMinutes < 60) return `${diffInMinutes}m`;
     if (diffInMinutes < 1440) return `${Math.floor(diffInMinutes / 60)}h`;
@@ -44,9 +47,9 @@ export const Post = memo(({ post, currentUser, onDelete }) => {
   return (
     <div className="post">
       <div className="post-header">
-        <img 
-          src={post.threadUsers?.avatar_url || '/default-avatar.png'} 
-          alt={post.threadUsers?.username} 
+        <img
+          src={post.threadUsers?.avatar_url || '/default-avatar.png'}
+          alt={post.threadUsers?.username}
           className="post-avatar"
         />
         <div className="post-user-info">
@@ -57,7 +60,7 @@ export const Post = memo(({ post, currentUser, onDelete }) => {
             {getTimeAgo(post.created_at)}
           </span>
           {isAuthor && (
-            <button 
+            <button
               onClick={handleDelete}
               className="delete-button"
               aria-label="Eliminar post"
@@ -68,7 +71,7 @@ export const Post = memo(({ post, currentUser, onDelete }) => {
           )}
         </div>
       </div>
-      
+
       <div className="post-content">
         <p>{post.content}</p>
       </div>
@@ -80,25 +83,25 @@ export const Post = memo(({ post, currentUser, onDelete }) => {
         </button>
 
         {/* Botón de comentar que abre modal */}
-        <button 
+        <button
           className="post-action"
           onClick={() => {
             setSelectedPost(post);
-            document.body.style.overflow = 'hidden'; // Bloquea scroll al abrir modal
+            //document.body.style.overflow = 'hidden'; // Bloquea scroll al abrir modal
           }}
           aria-label="Añadir comentario"
         >
           <span className="emoji">💬</span>
-          {post.comments_count || 0}
+          {displayPost.commentsCount || 0} {/* Usar el post actualizado */}
         </button>
 
         <button className="post-action">
           <span className="emoji">🔄</span>
         </button>
         <button className="post-action">
-           <span className="emoji">
-             <img src="../src/assets/Share.png" className="imgshared"/>
-           </span>
+          <span className="emoji">
+            <img src="../src/assets/Share.png" className="imgshared" />
+          </span>
         </button>
       </div>
     </div>

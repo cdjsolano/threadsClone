@@ -7,7 +7,7 @@ import ErrorMessage from "../../UI/ErrorMessage";
 
 export function Feed() {
   const { user } = useAuth();
-  const { posts, loading, error, refetch } = usePosts(); // Nota: loadMore y hasMore también pueden eliminarse si ya no se usan
+  const { posts, loading, error, refetch } = usePosts(); 
 
   if (loading) return <LoadingSpinner message="Cargando posts..." />;
   if (error) return <ErrorMessage error={error} />;
