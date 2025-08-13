@@ -7,6 +7,7 @@ import { AuthProvider } from '../src/context/AuthContext'
 import Loadingpage from './components/Profile/Loadingpage'
 import { PostProvider } from './context/PostContext'
 import Profile from './pages/Profile'
+import PostDetail from './pages/PostDetail'
 import CommentModal from './components/Shared/CommentModal'
 
 function App() {
@@ -36,7 +37,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/Profile" element={<Profile />} />
-            {/* Agrega otras rutas si las tienes */}
+            <Route path="/post/:id" element={<PostDetail />} />
+            
           </Routes>
         )}
 

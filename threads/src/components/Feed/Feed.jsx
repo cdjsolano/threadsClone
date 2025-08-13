@@ -7,7 +7,7 @@ import ErrorMessage from "../../UI/ErrorMessage";
 
 export function Feed() {
   const { user } = useAuth();
-  const { posts, loading, error, refetch } = usePosts(); 
+  const { posts, setPosts, loading, error, refetch } = usePosts();
 
   if (loading) return <LoadingSpinner message="Cargando posts..." />;
   if (error) return <ErrorMessage error={error} />;
@@ -23,11 +23,21 @@ export function Feed() {
       ) : (
         <div className="postsList">
           {posts?.map((post) => (
-            <Post 
-              key={`${post.id}_${post.created_at}`} // Key única compuesta (recomendado)
-              post={post} 
+            <Post
+              key={`${post.id}_${post.created_at}`}
+              post={post}
               currentUser={user}
               onDelete={refetch}
+              // 🔹 Callback para incrementar contador de comentarios
+              onCommentAdded={(postId) => {
+                setPosts(prev =>
+                  prev.map(p =>
+                    p.id === postId
+                      ? { ...p, commentsCount: (p.commentsCount || 0) + 1 }
+                      : p
+                  )
+                );
+              }}
             />
           ))}
         </div>

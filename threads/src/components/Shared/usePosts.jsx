@@ -2,17 +2,15 @@ import { useEffect, useState } from "react";
 import { supabase } from "../../../supabaseClient";
 
 export function usePosts() {
-  // [Cambio #1] - Añado estado para distinguir carga inicial
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [initialLoad, setInitialLoad] = useState(true); // Nuevo estado
+  const [initialLoad, setInitialLoad] = useState(true);
 
-  // [Cambio #2] - Optimizo fetchAllPosts para cache local
   const fetchAllPosts = async () => {
     try {
       setLoading(true);
-      console.time('Supabase Query'); // Debug de rendimiento
+      console.time('Supabase Query');
       
       const { data, error } = await supabase
         .from("post")
@@ -21,7 +19,6 @@ export function usePosts() {
 
       if (error) throw error;
 
-      // [Cambio #3] - Actualizo cache solo si hay nuevos datos
       setPosts(prev => {
         const newIds = new Set(data?.map(post => post.id));
         const merged = [
@@ -36,23 +33,21 @@ export function usePosts() {
       console.error("Error fetching posts:", err.message);
     } finally {
       setLoading(false);
-      setInitialLoad(false); // [Cambio #4] - Marco carga inicial como completa
+      setInitialLoad(false);
       console.timeEnd('Supabase Query');
     }
   };
 
-  // [Cambio #5] - Carga inmediata + polling separado (Línea 38-44)
   useEffect(() => {
-    fetchAllPosts(); // Carga inicial inmediata
+    fetchAllPosts();
 
     const interval = setInterval(() => {
-      if (!initialLoad) fetchAllPosts(); // Polling solo después de carga inicial
+      if (!initialLoad) fetchAllPosts();
     }, 120000);
 
     return () => clearInterval(interval);
   }, []);
 
-  // [Cambio #6] - Suscripción optimizada (Línea 46-83)
   useEffect(() => {
     let subscription;
 
@@ -61,7 +56,6 @@ export function usePosts() {
         await supabase.removeChannel(subscription);
       }
 
-      // [Cambio #7] - Filtro dinámico basado en última actualización
       const lastPostDate = posts[0]?.created_at || new Date().toISOString();
       
       subscription = supabase
@@ -72,10 +66,9 @@ export function usePosts() {
             event: "*",
             schema: "public",
             table: "post",
-            filter: `created_at=gt.${lastPostDate}` // Filtro dinámico
+            filter: `created_at=gt.${lastPostDate}`
           },
           (payload) => {
-            // [Cambio #8] - Actualización optimista
             if (payload.eventType === "INSERT") {
               setPosts(prev => [payload.new, ...prev]);
             } else if (payload.eventType === "DELETE") {
@@ -89,7 +82,6 @@ export function usePosts() {
         });
     };
 
-    // [Cambio #9] - Espero a tener datos iniciales
     if (!initialLoad && posts.length) {
       setupRealtime();
     }
@@ -100,11 +92,35 @@ export function usePosts() {
           .catch(err => console.error("Cleanup error:", err));
       }
     };
-  }, [initialLoad, posts]); // [Cambio #10] - Dependencias optimizadas
+  }, [initialLoad, posts]);
+
+  // 🔹 Nueva suscripción realtime para comments
+  useEffect(() => {
+    const commentSub = supabase
+      .channel("comments_changes")
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "comments" },
+        (payload) => {
+          const postId = payload.new.post_id;
+          setPosts(prev =>
+            prev.map(p =>
+              p.id === postId
+                ? { ...p, commentsCount: (p.commentsCount || 0) + 1 }
+                : p
+            )
+          );
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(commentSub);
+    };
+  }, []);
 
   const handleDelete = async (postId) => {
     try {
-      // [Cambio #11] - Eliminación optimista
       setPosts(prev => prev.filter(post => post.id !== postId));
       
       const { error } = await supabase
@@ -116,13 +132,14 @@ export function usePosts() {
     } catch (err) {
       setError(err);
       console.error("Error deleting post:", err.message);
-      fetchAllPosts(); // Recarga si falla
+      fetchAllPosts();
     }
   };
 
   return { 
-    posts, 
-    loading: loading && initialLoad, // [Cambio #12] - Loading específico
+    posts,
+    setPosts, // 🔹 Lo exponemos para poder actualizar contador desde Feed.jsx
+    loading: loading && initialLoad,
     error,
     refetch: fetchAllPosts,
     handleDelete
