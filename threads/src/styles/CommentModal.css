@@ -14,10 +14,11 @@
 
 /* Contenedor principal del modal */
 .comment-modal-content {
-  background-color: white;
+  background-color: rgb(31, 29, 29);
   border-radius: 8px;
   width: 90%;
-  max-width: 500px;
+  height: fit-content;
+  max-width: 700px;
   padding: 24px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
@@ -52,22 +53,24 @@
 
 /* Contenido del post */
 .comment-modal-post-content {
-  color: #4b5563;
+  color: #b3b6bb;
   margin-bottom: 16px;
   padding: 8px;
-  background-color: #f9fafb;
+  background-color: #1f1d1d;
   border-radius: 4px;
+  text-align: left;
 }
 
 /* Área de texto */
 .comment-modal-textarea {
   width: 100%;
   padding: 12px;
-  border: 1px solid #d1d5db;
+  border: none;
   border-radius: 6px;
   resize: vertical;
   min-height: 100px;
   margin-bottom: 16px;
+  background-color: #1f1d1d;
 }
 
 .comment-modal-textarea:focus {
@@ -121,4 +124,41 @@
 
 .comment-modal-submit-btn--loading {
   background-color: #93c5fd;
+}
+
+/* 🔹 Contenedor de info de usuario en el modal */
+.comment-modal-user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0;
+  padding: 8px;
+  background-color: #1f1d1d; /* Fondo sutil */
+  border-radius: 8px;
+}
+
+/* 🔹 Avatar circular */
+.comment-modal-user-info .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.1); /* Borde sutil */
+}
+
+/* 🔹 Nombre del usuario */
+.comment-modal-user-info span {
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+/* 🔹 Texto del post al que respondemos */
+.comment-modal-post-content {
+  font-size: 14px;
+  color: #ccc;
+  padding: 10px 0;
+  border-left: 3px solid #666;
+  padding-left: 10px;
+  margin-bottom: 12px;
 }

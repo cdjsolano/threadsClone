@@ -5,7 +5,7 @@ const PostContext = createContext();
 export const PostProvider = ({ children }) => {
   const [selectedPost, setSelectedPost] = useState(null);
   
-  // Memoiza el valor del contexto para optimizar rendimiento
+  // Memoriza el valor del contexto para optimizar rendimiento
   const contextValue = useMemo(() => ({
     selectedPost,
     setSelectedPost,
