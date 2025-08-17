@@ -70,8 +70,8 @@ body {
     z-index: 100;
     backdrop-filter: blur(10px);
     align-items: center;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
     border: 1px solid #777777;
 }
 
@@ -90,10 +90,22 @@ body {
    
 }
 
+.heart {
+  width: 24px;
+  height: 24px;
+  stroke: gray;   /* borde */
+  fill: none;     /* relleno vacío */
+}
+
+.heart.liked {
+  stroke: red;
+  fill: red;
+}
+
 .imgshared {
 
-    width: 20px;
-    height: 20px;
+    width: auto;
+    height: min-content;
     size-adjust: cover;
 }
 

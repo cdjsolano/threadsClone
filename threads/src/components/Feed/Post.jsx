@@ -1,4 +1,5 @@
 import { memo, useState } from "react";
+import { Heart } from "lucide-react";
 import { Link } from "react-router-dom"; // 🔹 Nuevo import para navegación
 import { supabase } from "../../../supabaseClient";
 import { toast } from "react-toastify";
@@ -10,7 +11,7 @@ export const Post = memo(({ post, currentUser, onDelete, onCommentAdded }) => {
   const { selectedPost, setSelectedPost } = usarPost();
   const displayPost = selectedPost?.id === post.id ? selectedPost : post;
 
-   // 🔹 Estado local para el like (solo para UI, no persiste entre recargas)
+  // 🔹 Estado local para el like (solo para UI, no persiste entre recargas)
   const [hasLiked, setHasLiked] = useState(false);
   // 🔹 Estado local para el contador (para respuesta inmediata)
   const [localLikesCount, setLocalLikesCount] = useState(post.likes_count || 0);
@@ -19,17 +20,17 @@ export const Post = memo(({ post, currentUser, onDelete, onCommentAdded }) => {
     try {
       // 🔹 Calculamos el nuevo valor del contador
       const newLikesCount = hasLiked ? localLikesCount - 1 : localLikesCount + 1;
-      
+
       // 🔹 Actualización optimista de la UI
       setHasLiked(!hasLiked);
       setLocalLikesCount(newLikesCount);
-      
+
       // 🔹 Actualización en Supabase
       const { error } = await supabase
         .from("post")
         .update({ likes_count: newLikesCount })
         .eq("id", post.id);
-      
+
       if (error) throw error;
 
       // 🔹 Actualizamos el contexto si es necesario
@@ -123,7 +124,7 @@ export const Post = memo(({ post, currentUser, onDelete, onCommentAdded }) => {
             handleLike();
           }}
           // 🔹 Estilo condicional para el botón de like
-          style={{ 
+          style={{
             color: hasLiked ? 'red' : 'inherit',
             cursor: currentUser ? 'pointer' : 'not-allowed' // 🔹 Deshabilitar si no hay usuario
           }}
@@ -131,7 +132,8 @@ export const Post = memo(({ post, currentUser, onDelete, onCommentAdded }) => {
           title={!currentUser ? "Inicia sesión para dar like" : ""}
         >
           {/* 🔹 Cambiamos el emoji basado en hasLiked */}
-          <span className="emoji">{hasLiked ? '❤️' : '🤍'}</span>
+          <span className="emoji">{hasLiked ? <Heart className="heart liked" />
+            : <Heart className="heart" />}</span>
           {/* 🔹 Usamos el contador local para respuesta inmediata */}
           {localLikesCount}
         </button>
@@ -144,7 +146,7 @@ export const Post = memo(({ post, currentUser, onDelete, onCommentAdded }) => {
           }}
           aria-label="Añadir comentario"
         >
-          <span className="emoji">💬</span>
+          <span className="emoji"><img src="../src/assets/Comments.png" className="imgshared" /></span>
           {displayPost.commentsCount || 0}
         </button>
 
@@ -155,7 +157,9 @@ export const Post = memo(({ post, currentUser, onDelete, onCommentAdded }) => {
             console.log("Repost post:", post.id);
           }}
         >
-          <span className="emoji">🔄</span>
+          <span className="emoji">
+            <img src="../src/assets/Repost.png" className="imgshared" />
+          </span>
         </button>
 
         <button
