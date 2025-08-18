@@ -4,6 +4,8 @@ import { supabase } from "../../supabaseClient";
 import { useAuth } from "../context/AuthContext";
 import LoadingSpinner from "../UI/LoadingSpinner";
 import ErrorMessage from "../UI/ErrorMessage";
+import Comments from "../components/Shared/Comments";
+import CommentModal from "../components/Shared/CommentModal";
 import "../styles/post-detail.css";
 
 
@@ -72,15 +74,15 @@ export default function PostDetail() {
     }, [id]);
 
     const getTimeAgo = (dateString) => {
-    const now = new Date();
-    const postDate = new Date(dateString);
-    const diffInMinutes = Math.floor((now - postDate) / (1000 * 60));
+        const now = new Date();
+        const postDate = new Date(dateString);
+        const diffInMinutes = Math.floor((now - postDate) / (1000 * 60));
 
-    if (diffInMinutes < 1) return "ahora";
-    if (diffInMinutes < 60) return `${diffInMinutes}m`;
-    if (diffInMinutes < 1440) return `${Math.floor(diffInMinutes / 60)}h`;
-    return `${Math.floor(diffInMinutes / 1440)}d`;
-  };
+        if (diffInMinutes < 1) return "ahora";
+        if (diffInMinutes < 60) return `${diffInMinutes}m`;
+        if (diffInMinutes < 1440) return `${Math.floor(diffInMinutes / 60)}h`;
+        return `${Math.floor(diffInMinutes / 1440)}d`;
+    };
 
     // 🔹 Manejar envío de nuevo comentario
     const handleSubmitComment = async () => {
@@ -111,7 +113,7 @@ export default function PostDetail() {
         <div className="post-detail-container">
             {/* 🔹 Botón para volver */}
             <button className="back-button" onClick={() => navigate("/")}>
-                ← 
+                ←
             </button>
             {post && (
                 <div className="post-detail">
@@ -124,11 +126,11 @@ export default function PostDetail() {
                         <div className="post-user-info">
                             <span className="post-username">{post.threadUsers?.fullName}</span>
                             <span className="post-time">{getTimeAgo(post.created_at)}</span>
-                           
+
                         </div>
                     </div>
-                    <div className="post-content-detail"> 
-                        <p>{post.content}</p> 
+                    <div className="post-content-detail">
+                        <p>{post.content}</p>
                     </div>
                 </div>
             )}
@@ -152,12 +154,18 @@ export default function PostDetail() {
 
             {/* Formulario para nuevo comentario */}
             <div className="comment-form">
-                <textarea
+                {/* <textarea
                     value={newComment}
                     onChange={(e) => setNewComment(e.target.value)}
                     placeholder="Escribe tu comentario..."
                 />
                 <button onClick={handleSubmitComment}>Comentar</button>
+               */}
+                
+                
+
+            
+                
             </div>
         </div>
     );

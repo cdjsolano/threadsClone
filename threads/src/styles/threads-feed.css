@@ -87,20 +87,10 @@ body {
     min-height: 60px;
     padding: 12px 0;
     line-height: 1.5;
-   
+
 }
 
-.heart {
-  width: 24px;
-  height: 24px;
-  stroke: gray;   /* borde */
-  fill: none;     /* relleno vacío */
-}
 
-.heart.liked {
-  stroke: red;
-  fill: red;
-}
 
 .imgshared {
 
@@ -163,7 +153,7 @@ body {
     flex-direction: column;
     align-items: flex-start;
     border-left: 1px solid #777777;
-    border-right: 1px solid  #777777;
+    border-right: 1px solid #777777;
     border-bottom: 1px solid #777777;
 }
 
@@ -241,9 +231,9 @@ body {
 /* ===== ACCIONES DEL POST ===== */
 .post-actions {
     display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-left: 48px;
+    gap: 0px;
+    margin-left: 58px;
+    align-items: baseline;
 }
 
 .post-action {
@@ -260,22 +250,42 @@ body {
     font-size: 14px;
     font-weight: 500;
     transition: all 0.2s ease;
-    min-width: 60px;
+    min-width: 40px;
+    outline: none;
 }
 
 .post-action:hover {
     background: var(--hover-bg);
     color: var(--text-primary);
     transform: translateY(-1px);
+
+}
+
+.post-action:focus {
+    outline: none;
 }
 
 .post-action.liked {
     color: var(--heart-color);
 }
 
-.post-action .emoji {
-    font-size: 16px;
+.iconos-post-action {
+    width: 18px;
+    height: 18px;
+    stroke: rgb(245, 243, 243);
+    fill: none;
+
 }
+
+.flipped {
+    transform: scaleX(-1);
+}
+
+.liked {
+    stroke: red;
+    fill: red;
+}
+
 
 /* ===== ESTADOS DE CARGA Y ERROR ===== */
 .loading-spinner {
@@ -312,11 +322,57 @@ body {
     display: flex;
     flex-direction: column;
     position: relative;
-    
     justify-content: space-between;
     height: fit-content;
 
 }
+
+
+/* Área trigger estilo Threads */
+.create-post-trigger {
+    display: flex;
+    cursor: pointer;
+    margin-bottom: 16px;
+    justify-content: space-between;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-color);
+    padding: 16px 20px;
+    position: relative;
+    gap: 20px;
+    width: 500px;
+    top: 20px;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+    align-items: center;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border: 1px solid #777777;
+}
+
+.create-post-trigger:hover {
+    background: rgba(255, 255, 255, 0.01);
+}
+
+.trigger-content {
+    flex: 1;
+    margin: 0 12px;
+    color: #777;
+}
+
+.fake-submit {
+    background: #1d9bf0;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: default;
+    opacity: 0.6;
+    /* 🔹 solo decorativo */
+}
+
+
+
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {

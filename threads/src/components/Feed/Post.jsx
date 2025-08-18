@@ -1,5 +1,5 @@
 import { memo, useState } from "react";
-import { Heart } from "lucide-react";
+import { Heart, Repeat2, MessageCircle, Send } from "lucide-react";
 import { Link } from "react-router-dom"; // 🔹 Nuevo import para navegación
 import { supabase } from "../../../supabaseClient";
 import { toast } from "react-toastify";
@@ -132,8 +132,8 @@ export const Post = memo(({ post, currentUser, onDelete, onCommentAdded }) => {
           title={!currentUser ? "Inicia sesión para dar like" : ""}
         >
           {/* 🔹 Cambiamos el emoji basado en hasLiked */}
-          <span className="emoji">{hasLiked ? <Heart className="heart liked" />
-            : <Heart className="heart" />}</span>
+          <span className="emoji">{hasLiked ? <Heart className="iconos-post-action liked" />
+            : <Heart className="iconos-post-action" />}</span>
           {/* 🔹 Usamos el contador local para respuesta inmediata */}
           {localLikesCount}
         </button>
@@ -146,7 +146,7 @@ export const Post = memo(({ post, currentUser, onDelete, onCommentAdded }) => {
           }}
           aria-label="Añadir comentario"
         >
-          <span className="emoji"><img src="../src/assets/Comments.png" className="imgshared" /></span>
+          <span className="emoji"><MessageCircle className="iconos-post-action flipped" /></span>
           {displayPost.commentsCount || 0}
         </button>
 
@@ -158,7 +158,7 @@ export const Post = memo(({ post, currentUser, onDelete, onCommentAdded }) => {
           }}
         >
           <span className="emoji">
-            <img src="../src/assets/Repost.png" className="imgshared" />
+           <Repeat2 className="iconos-post-action" />
           </span>
         </button>
 
@@ -170,7 +170,7 @@ export const Post = memo(({ post, currentUser, onDelete, onCommentAdded }) => {
           }}
         >
           <span className="emoji">
-            <img src="../src/assets/Share.png" className="imgshared" />
+            <Send className="iconos-post-action" />
           </span>
         </button>
       </div>

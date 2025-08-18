@@ -1,11 +1,12 @@
-import { useState, useEffect } from 'react';
+import { Link, useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { supabase } from '../../../supabaseClient';
-import '../../styles/threads-feed.css';
+import '../../styles/post-detail.css';
 
-export default function CommentForm({ postId }) {
+export default function CommentForm({ postId, posts }) {
   const { user } = useAuth();
   const [content, setContent] = useState('');
+  const [post] = posts
 
   const submitComment = async () => {
     if (!user) return;
@@ -21,9 +22,12 @@ export default function CommentForm({ postId }) {
   };
 
   return (
-    <div>
-      <textarea value={content} onChange={(e) => setContent(e.target.value)} />
-      <button onClick={submitComment}>Comentar</button>
+    <div className="comment-form">
+      <Link
+                    to={`/post/${post.id}`}
+                    style={{ textDecoration: "none", color: "inherit", width: "400px" }}>
+      <textarea value={content} onChange={(e) => setContent(e.target.value)} placeholder=' comentar..'/>
+      </Link>
     </div>
   );
 }

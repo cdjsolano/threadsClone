@@ -71,6 +71,8 @@
   min-height: 100px;
   margin-bottom: 16px;
   background-color: #1f1d1d;
+  overflow: hidden;
+  resize: none;
 }
 
 .comment-modal-textarea:focus {
