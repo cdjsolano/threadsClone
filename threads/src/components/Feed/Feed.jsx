@@ -1,7 +1,7 @@
 import { useAuth } from "../../context/AuthContext";
 import { usePosts } from "../Shared/usePosts";
 import { Post } from "./Post";
-import Crearpost from "./crearPost";
+import Crearpost from "./Crearpost";
 import LoadingSpinner from "../../UI/LoadingSpinner";
 import ErrorMessage from "../../UI/ErrorMessage";
 import { useEffect, useRef } from "react";
