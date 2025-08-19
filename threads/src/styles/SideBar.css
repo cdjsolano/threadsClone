@@ -1,4 +1,4 @@
-
+/* SideBar.css actualizado */
 .sidebar {
     position: fixed;
     top: 150px;
@@ -71,6 +71,7 @@
     padding: 5px;
     transition: border-color 0.25s;
     justify-content: center;
+    color: white;
 }
 
 .footer {

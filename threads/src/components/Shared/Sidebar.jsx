@@ -1,4 +1,4 @@
-import { House, MessageSquare, Plus, Heart, UserRound } from 'lucide-react';
+import { House, MessageSquare, Plus, Heart, UserRound, LogOut } from 'lucide-react';
 import { Link, useNavigate } from "react-router-dom";
 import "../../styles/SideBar.css";
 import { useAuth } from '../../context/AuthContext';
@@ -14,40 +14,76 @@ export default function Sidebar() {
   };
 
   return (
-    <div className="sidebar">
-      <div className='logo'>
-        <img src={logothreads} alt="Logo threads" />
+    <>
+      {/* Sidebar para desktop */}
+      <div className="sidebar desktop-sidebar">
+        <div className='logo'>
+          <img src={logothreads} alt="Logo threads" />
+        </div>
 
+        <Link to="/home" className="sidebar-btn" title="Feed">
+          <House className="icon" />
+        </Link>
+        <Link to="/MyComments" className="sidebar-btn" title="Mis Comentarios">
+          <MessageSquare className='icon flipped' />
+        </Link>
+
+        <button
+          className="sidebar-btn"
+          title="Nuevo post"
+          onClick={() => navigate("/NuevoPost")}
+        >
+          <Plus className='add-btn' />
+        </button>
+
+        <Link to="/likes" className="sidebar-btn" title="Me gusta recibidos">
+          <Heart className="icon" />
+        </Link>
+        <Link to="/profile" className="sidebar-btn" title="Perfil">
+          <UserRound className="icon" />
+        </Link>
+        
+        {/* Botón de logout con texto (solo visible en desktop) */}
+        <div className="footer">
+          <button onClick={handleLogout} className="salida">
+            Log Out
+          </button>
+        </div>
       </div>
 
+      {/* Sidebar para móvil */}
+      <div className="mobile-sidebar">
+        <Link to="/home" className="sidebar-btn" title="Feed">
+          <House className="icon" />
+        </Link>
+        <Link to="/MyComments" className="sidebar-btn" title="Mis Comentarios">
+          <MessageSquare className='icon flipped' />
+        </Link>
 
-      <Link to="/home" className="sidebar-btn" title="Feed">
-        <House className="icon" />
-      </Link>
-      <Link to="/MyComments" className="sidebar-btn" title="Mis Comentarios">
-        <MessageSquare className='icon flipped' />
-      </Link>
+        <button
+          className="sidebar-btn"
+          title="Nuevo post"
+          onClick={() => navigate("/NuevoPost")}
+        >
+          <Plus className='add-btn' />
+        </button>
 
-      <button
-        className="sidebar-btn"
-        title="Nuevo post"
-        onClick={() => navigate("/NuevoPost")}
-      >
-        <Plus className='add-btn' />
-      </button>
-
-      <Link to="/likes" className="sidebar-btn" title="Me gusta recibidos">
-        <Heart className="icon" />
-      </Link>
-      <Link to="/profile" className="sidebar-btn" title="Perfil">
-        <UserRound className="icon" />
-      </Link>
-      <div className="footer">
-        <button onClick={handleLogout} className="salida">
-          Log Out
+        <Link to="/likes" className="sidebar-btn" title="Me gusta recibidos">
+          <Heart className="icon" />
+        </Link>
+        <Link to="/profile" className="sidebar-btn" title="Perfil">
+          <UserRound className="icon" />
+        </Link>
+        
+        {/* Botón de logout como icono (solo visible en móvil) */}
+        <button 
+          className="sidebar-btn" 
+          title="Cerrar sesión"
+          onClick={handleLogout}
+        >
+          <LogOut className="icon" />
         </button>
       </div>
-
-    </div>
+    </>
   );
 }
