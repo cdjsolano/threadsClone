@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { supabase } from "../../supabaseClient";
 import { Post } from "../components/Feed/Post";
-import "../styles/profile.css"; // 🔹 Estilo propio
+import "../styles/Profile.css"; // 🔹 Estilo propio
 
 export default function Profile() {
   const { user } = useAuth();
