@@ -10,6 +10,8 @@ export default function LoadingPage() {
     const timer = setTimeout(() => {
       navigate("/login"); // 🔹 Redirige al Login
     }, 4000); 
+      navigate("/login"); // 🔹 Redirige al Home
+    }, 4000); // ⏳ 4s (ajústalo a tu gusto)
 
     return () => clearTimeout(timer);
   }, [navigate]);
