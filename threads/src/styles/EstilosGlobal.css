@@ -35,7 +35,7 @@
 
 @media (max-width: 768px) {
     .landpage {
-        background-image: url('../assets/Backgrounlogin-mobile.png'); /* Imagen para móviles */
+        background-image: url('../assets/bckthreads_mble.png'); /* Imagen para móviles */
     }
     
     .landpage .card {
