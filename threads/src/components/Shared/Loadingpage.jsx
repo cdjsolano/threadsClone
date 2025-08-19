@@ -8,7 +8,7 @@ export default function LoadingPage() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate("/Home"); // 🔹 Redirige al Home
+      navigate("/login"); // 🔹 Redirige al Home
     }, 4000); // ⏳ 4s (ajústalo a tu gusto)
 
     return () => clearTimeout(timer);
