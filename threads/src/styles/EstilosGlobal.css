@@ -11,13 +11,15 @@
     background-image: url('../assets/Backgrounlogin.png');
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: center;
     font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'SF Pro Display', 'Trebuchet MS', sans-serif;
     font-style: italic;
-    width: 1390px;
-    height: 682px;
+    width: 100%;
+    min-height: 100vh;
     align-items: center;
     justify-content: center;
-    
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .landpage .card {
@@ -27,9 +29,27 @@
     padding: 20px;
     box-shadow: 0 4px 8px rgba(243, 242, 242, 0.2);
     color: aliceblue;
+    width: 100%;
+    max-width: 400px;
 }
 
+@media (max-width: 768px) {
+    .landpage {
+        background-image: url('../assets/Backgrounlogin-mobile.png'); /* Imagen para móviles */
+    }
+    
+    .landpage .card {
+        padding: 15px;
+        max-width: 90%;
+    }
+}
 
+/* Ajustes para pantallas muy pequeñas */
+@media (max-width: 480px) {
+    .landpage .card {
+        padding: 10px;
+    }
+}
 
 /* desde aqui perfil usuario */
 
