@@ -1,5 +1,5 @@
 import React from 'react'
-import Crearpost from "../components/Feed/crearPost";
+import Crearpost from "../components/Feed/Crearpost";
 
 
 
