@@ -4,169 +4,172 @@ import { supabase } from "../../supabaseClient";
 import { useAuth } from "../context/AuthContext";
 import LoadingSpinner from "../UI/LoadingSpinner";
 import ErrorMessage from "../UI/ErrorMessage";
-import Comments from "../components/Shared/Comments";
-import CommentModal from "../components/Shared/CommentModal";
 import "../styles/post-detail.css";
-
+import { ArrowLeft } from "lucide-react"
 
 export default function PostDetail() {
-    const { id } = useParams();
-    const { user } = useAuth();
-    const navigate = useNavigate();
-    const [post, setPost] = useState(null);
-    const [comments, setComments] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [newComment, setNewComment] = useState("");
+  const { id } = useParams();
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const [post, setPost] = useState(null);
+  const [comments, setComments] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [newComment, setNewComment] = useState("");
 
-    // 🔹 Cargar post y comentarios
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setLoading(true);
+  // 🔹 Cargar post y comentarios
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
 
-                // Obtener post
-                const { data: postData, error: postError } = await supabase
-                    .from("post")
-                    .select(`*, threadUsers:user_id (fullName, avatar_url)`)
-                    .eq("id", id)
-                    .single();
+        // Obtener post
+        const { data: postData, error: postError } = await supabase
+          .from("post")
+          .select(`*, threadUsers:user_id (fullName, avatar_url)`)
+          .eq("id", id)
+          .single();
 
-                if (postError) throw postError;
-                setPost(postData);
+        if (postError) throw postError;
+        setPost(postData);
 
-                // Obtener comentarios
-                const { data: commentsData, error: commentsError } = await supabase
-                    .from("comments")
-                    .select(`*, threadUsers:user_id (fullName, avatar_url)`)
-                    .eq("post_id", id)
-                    .order("created_at", { ascending: true });
+        // Obtener comentarios
+        const { data: commentsData, error: commentsError } = await supabase
+          .from("comments")
+          .select(`*, threadUsers:user_id (fullName, avatar_url)`)
+          .eq("post_id", id)
+          .order("created_at", { ascending: false });
 
-                if (commentsError) throw commentsError;
-                setComments(commentsData || []);
-            } catch (err) {
-                console.error("Error cargando datos:", err.message);
-                setError(err);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchData();
-    }, [id]);
-
-    // 🔹 Suscripción realtime para comentarios nuevos
-    useEffect(() => {
-        const channel = supabase
-            .channel("comments_realtime")
-            .on(
-                "postgres_changes",
-                { event: "INSERT", schema: "public", table: "comments", filter: `post_id=eq.${id}` },
-                (payload) => {
-                    setComments((prev) => [...prev, payload.new]);
-                }
-            )
-            .subscribe();
-
-        return () => {
-            supabase.removeChannel(channel);
-        };
-    }, [id]);
-
-    const getTimeAgo = (dateString) => {
-        const now = new Date();
-        const postDate = new Date(dateString);
-        const diffInMinutes = Math.floor((now - postDate) / (1000 * 60));
-
-        if (diffInMinutes < 1) return "ahora";
-        if (diffInMinutes < 60) return `${diffInMinutes}m`;
-        if (diffInMinutes < 1440) return `${Math.floor(diffInMinutes / 60)}h`;
-        return `${Math.floor(diffInMinutes / 1440)}d`;
+        if (commentsError) throw commentsError;
+        setComments(commentsData || []);
+      } catch (err) {
+        console.error("Error cargando datos:", err.message);
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    // 🔹 Manejar envío de nuevo comentario
-    const handleSubmitComment = async () => {
-        if (!user) {
-            alert("Debes iniciar sesión para comentar");
-            return;
-        }
-        if (!newComment.trim()) return;
+    fetchData();
+  }, [id]);
 
-        const { error } = await supabase.from("comments").insert({
-            content: newComment,
-            post_id: id,
-            user_id: user.id,
-            username: user.profile?.username || user.email
-        });
-
-        if (error) {
-            console.error("Error al enviar comentario:", error.message);
-        } else {
-            setNewComment("");
+  // 🔹 Suscripción realtime para comentarios nuevos
+  useEffect(() => {
+    const channel = supabase
+      .channel("comments_realtime")
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "comments", filter: `post_id=eq.${id}` },
+        (payload) => {
+          // ✅ CAMBIO 1: Insertar al inicio en vez de al final
+          setComments((prev) => [payload.new, ...prev]);
         }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
     };
+  }, [id]);
 
-    if (loading) return <LoadingSpinner message="Cargando post..." />;
-    if (error) return <ErrorMessage error={error} />;
+  const getTimeAgo = (dateString) => {
+    const now = new Date();
+    const postDate = new Date(dateString);
+    const diffInMinutes = Math.floor((now - postDate) / (1000 * 60));
 
-    return (
-        <div className="post-detail-container">
-            {/* 🔹 Botón para volver */}
-            <button className="back-button" onClick={() => navigate("/")}>
-                ←
-            </button>
-            {post && (
-                <div className="post-detail">
-                    <div className="post-header">
-                        <img
-                            src={post.threadUsers?.avatar_url || "/default-avatar.png"}
-                            alt={post.threadUsers?.username}
-                            className="post-avatar"
-                        />
-                        <div className="post-user-info">
-                            <span className="post-username">{post.threadUsers?.fullName}</span>
-                            <span className="post-time">{getTimeAgo(post.created_at)}</span>
+    if (diffInMinutes < 1) return "ahora";
+    if (diffInMinutes < 60) return `${diffInMinutes}m`;
+    if (diffInMinutes < 1440) return `${Math.floor(diffInMinutes / 60)}h`;
+    return `${Math.floor(diffInMinutes / 1440)}d`;
+  };
 
-                        </div>
-                    </div>
-                    <div className="post-content-detail">
-                        <p>{post.content}</p>
-                    </div>
-                </div>
-            )}
+  // 🔹 Manejar envío de nuevo comentario
+  const handleSubmitComment = async () => {
+    if (!user) {
+      alert("Debes iniciar sesión para comentar");
+      return;
+    }
+    if (!newComment.trim()) return;
 
-            {/* Lista de comentarios */}
-            <div className="comments-section">
-                <h3>Comentarios ({comments.length})</h3>
-                {comments.length === 0 && <p>No hay comentarios aún.</p>}
-                {comments.map((comment) => (
-                    <div key={comment.id} className="comment-item">
-                        <img
-                            src={comment.threadUsers?.avatar_url || "/default-avatar.png"}
-                            alt={comment.threadUsers?.fullName}
-                            className="post-avatar"
-                        />
-                        <strong>{comment.threadUsers?.fullName || "Usuario"}</strong><span className="post-time">{getTimeAgo(comment.created_at)}</span>
-                        <p>{comment.content}</p>
-                    </div>
-                ))}
+    const { data, error } = await supabase.from("comments").insert({
+      content: newComment,
+      post_id: id,
+      user_id: user.id,
+    }).select(`
+      *, 
+      threadUsers:user_id (fullName, avatar_url)
+    `).single(); // ✅ Para traer el usuario también
+
+    if (error) {
+      console.error("Error al enviar comentario:", error.message);
+    } else {
+      // ✅ CAMBIO 2: Insertar arriba inmediatamente
+      setComments((prev) => [data, ...prev]);
+      setNewComment("");
+    }
+  };
+
+  if (loading) return <LoadingSpinner message="Cargando post..." />;
+  if (error) return <ErrorMessage error={error} />;
+
+  return (
+    <div className="post-detail-container">
+      {/* 🔹 Botón para volver */}
+      <button className="back-button" onClick={() => navigate("/home")}>
+        <ArrowLeft/>
+      </button>
+      {post && (
+        <div className="post-detail">
+          <div className="post-detail-header">
+            <img
+              src={post.threadUsers?.avatar_url || "/default-avatar.png"}
+              alt={post.threadUsers?.username}
+              className="post-avatar"
+            />
+            <div className="post-user-info">
+              <span className="post-username">{post.threadUsers?.fullName}</span>
+              <span className="post-time">{getTimeAgo(post.created_at)}</span>
             </div>
-
-            {/* Formulario para nuevo comentario */}
-            <div className="comment-form">
-                {/* <textarea
-                    value={newComment}
-                    onChange={(e) => setNewComment(e.target.value)}
-                    placeholder="Escribe tu comentario..."
-                />
-                <button onClick={handleSubmitComment}>Comentar</button>
-               */}
-                
-                
-
-            
-                
-            </div>
+          </div>
+          <div className="post-content-detail">
+            <p>{post.content}</p>
+          </div>
         </div>
-    );
+      )}
+
+      {/* Lista de comentarios */}
+      <div className="comments-section">
+        <h3>Comentarios ({comments.length})</h3>
+        {comments.length === 0 && <p>No hay comentarios aún.</p>}
+        {comments.map((comment) => (
+          <div key={comment.id} className="comment-item">
+            <img
+              src={comment.threadUsers?.avatar_url || "/default-avatar.png"}
+              alt={comment.threadUsers?.fullName}
+              className="post-avatar"
+            />
+            <strong>{comment.threadUsers?.fullName || "Usuario"}</strong>
+            <span className="post-time">{getTimeAgo(comment.created_at)}</span>
+            <p>{comment.content}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Formulario para nuevo comentario */}
+      <div className="comment-form">
+        <textarea
+          value={newComment}
+          onChange={(e) => setNewComment(e.target.value)}
+          onInput={(e) => {
+              e.target.style.height = "20px";         // 🔹 Resetear altura
+              e.target.style.height = `${e.target.scrollHeight}px`; // 🔹 Ajustar a contenido
+            }}
+          placeholder={` Responde a ${post.threadUsers?.fullName || "Usuario"}`}
+          className="post-detail-textarea"
+        />
+        <button onClick={handleSubmitComment}>Comentar</button>
+      </div>
+    </div>
+  );
 }
+

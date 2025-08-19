@@ -10,11 +10,9 @@ export default function CommentModal() {
   const { user } = useAuth();
   const [commentText, setCommentText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   // 🔹 [NUEVO] Estados para info del autor del post y del usuario que comenta
   const [postAuthor, setPostAuthor] = useState(null);
   const [currentUserData, setCurrentUserData] = useState(null);
-
   // [FIX 1] - Manejo del scroll al montar/desmontar
   useEffect(() => {
     return () => {
@@ -146,14 +144,14 @@ export default function CommentModal() {
               alt={currentUserData.fullName}
               className="avatar"
             />
-            <span>{currentUserData.fullName}</span>
+            <span>{currentUserData.fullName} <p>{"  > Añade un tema.."}</p></span>
           </div>
         )}
 
         <textarea
           className="comment-modal-textarea"
-          placeholder="Escribe tu comentario..."
-          rows={4}
+          placeholder={`Responde a ${postAuthor?.fullName || "este usuario"}...`}
+          rows={3}
           value={commentText}
           onChange={(e) => setCommentText(e.target.value)}
           disabled={isSubmitting}

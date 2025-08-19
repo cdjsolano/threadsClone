@@ -1,0 +1,22 @@
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import loadingGif from '../../assets/Threads_logo_header_4x5.gif';
+import '../../styles/Loadingpages.css';
+
+export default function LoadingPage() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      navigate("/Home"); // 🔹 Redirige al Home
+    }, 4000); // ⏳ 4s (ajústalo a tu gusto)
+
+    return () => clearTimeout(timer);
+  }, [navigate]);
+
+  return (
+    <div className="loader-container">
+      <img src={loadingGif} alt="Cargando..." />
+    </div>
+  );
+}

@@ -1,18 +1,25 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import React from 'react'
-import { Routes, Route, Link } from 'react-router-dom'
+import { Routes, Route, Link, useLocation } from 'react-router-dom'
 import Home from '../src/pages/Home'
 import { AuthProvider } from '../src/context/AuthContext'
-import Loadingpage from './components/Profile/Loadingpage'
+import Loadingpage from './components/Shared/Loadingpage'
 import { PostProvider } from './context/PostContext'
 import Profile from './pages/Profile'
 import PostDetail from './pages/PostDetail'
 import CommentModal from './components/Shared/CommentModal'
+import Sidebar from './components/Shared/Sidebar'
+import MyComments from './components/Shared/MyComments'
+import NuevoPost from './pages/NuevoPost'
+import Login from './components/Shared/Login'
+
+
 
 function App() {
   const [count, setCount] = useState(0)
   const [showLoader, setShowLoader] = useState(true);
+   const location = useLocation();
 
   useEffect(() => {
     // Mostrar el loader por 3 segundos
@@ -27,20 +34,22 @@ function App() {
 
   return (
 
-
-    <AuthProvider>
-      <PostProvider>
       
-        {showLoader ? (
-          <Loadingpage /> // Muestra el gif
-        ) : (
+    <AuthProvider>
+     
+       
+      <PostProvider>
+            {location.pathname !== "/" && location.pathname !== "/login" && <Sidebar />}
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/Profile" element={<Profile />} />
+             <Route path="/" element={<Loadingpage />} />
+             <Route path="/login" element={<Login />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/post/:id" element={<PostDetail />} />
-            
+            <Route path="/mycomments" element={<MyComments />} />
+            <Route path="/nuevopost" element={<NuevoPost />} />
           </Routes>
-        )}
+        
 
         <CommentModal />
       </PostProvider>

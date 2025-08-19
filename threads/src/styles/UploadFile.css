@@ -1,0 +1,7 @@
+.preview-image {
+  max-width: 100%;   /* Nunca más ancha que el contenedor */
+  max-height: 300px; /* Ajusta el alto máximo que quieras */
+  object-fit: contain; /* Mantiene proporciones */
+  border-radius: 8px;  /* Opcional: esquinas redondeadas */
+  margin-top: 10px;
+}

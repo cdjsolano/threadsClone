@@ -1,7 +1,10 @@
 .profile-container {
-  max-width: 700px;
+  display: flex;
+  max-width: 1000px;
   margin: auto;
   padding: 16px;
+  flex-direction: column;
+  align-items: center;
 }
 
 .profile-header {
@@ -21,6 +24,9 @@
 
 .posts-list {
   display: flex;
+  position: relative;
+  left: 50px;
   flex-direction: column;
+  width: 700px;
   gap: 12px;
 }

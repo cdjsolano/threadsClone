@@ -74,8 +74,7 @@ export const Post = memo(({ post, currentUser, onDelete, onCommentAdded }) => {
     return `${Math.floor(diffInMinutes / 1440)}d`;
   };
 
-  console.log("Post renderizado con id:", post.id);
-
+  
   return (
     <div className="post">
       {/* 🔹 Envolvemos el header y el contenido en <Link> para ir al detalle */}
@@ -112,6 +111,23 @@ export const Post = memo(({ post, currentUser, onDelete, onCommentAdded }) => {
 
         <div className="post-content">
           <p>{post.content}</p>
+
+          {/* Renderizar imagen si existe */}
+          {post.image_url && (
+            <div className="post-media">
+              <img src={post.image_url} alt="post" className="post-img" />
+            </div>
+          )}
+
+          {/* Renderizar video si existe */}
+          {post.video_url && (
+            <div className="post-media">
+              <video controls className="post-video">
+                <source src={post.video_url} type="video/mp4" />
+              </video>
+            </div>
+          )}
+
         </div>
       </Link>
 
@@ -158,7 +174,7 @@ export const Post = memo(({ post, currentUser, onDelete, onCommentAdded }) => {
           }}
         >
           <span className="emoji">
-           <Repeat2 className="iconos-post-action" />
+            <Repeat2 className="iconos-post-action" />
           </span>
         </button>
 
