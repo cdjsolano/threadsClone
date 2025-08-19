@@ -1,5 +1,5 @@
 import React from 'react';
-import '../ui/LoadingSpinner.css'; // Archivo CSS modular
+import './LoadingSpinner.css'; // Archivo CSS modular
 
 export default function LoadingSpinner({ message = "Cargando..." }) {
   return (
