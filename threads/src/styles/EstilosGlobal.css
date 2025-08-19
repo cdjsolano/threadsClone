@@ -14,7 +14,7 @@
     background-position: center;
     font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'SF Pro Display', 'Trebuchet MS', sans-serif;
     font-style: italic;
-    width: 100%;
+    width: 1500px;
     min-height: 100vh;
     align-items: center;
     justify-content: center;
@@ -33,9 +33,10 @@
     max-width: 400px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 568px) {
     .landpage {
         background-image: url('../assets/bckthreads_mble.png'); /* Imagen para móviles */
+        width: 100%;
     }
     
     .landpage .card {
