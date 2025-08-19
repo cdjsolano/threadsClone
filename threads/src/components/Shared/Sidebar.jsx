@@ -2,6 +2,7 @@ import { House, MessageSquare, Plus, Heart, UserRound } from 'lucide-react';
 import { Link, useNavigate } from "react-router-dom";
 import "../../styles/SideBar.css";
 import { useAuth } from '../../context/AuthContext';
+import logothreads from '../../assets/Threads_icon.png';
 
 export default function Sidebar() {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ export default function Sidebar() {
   return (
     <div className="sidebar">
       <div className='logo'>
-        <picture><img src="/src/assets/Threads_icon.png" alt="Logo threads" /></picture>
+        <img src={logothreads} alt="Logo threads" />
 
       </div>
 
