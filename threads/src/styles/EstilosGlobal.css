@@ -33,17 +33,17 @@
     max-width: 400px;
 }
 
-@media (max-width: 968px) {
+@media (max-width: 768px) {
     .landpage {
         background-image: url('../assets/bckthreads_mble.png'); /* Imagen para móviles */
-        width: 600px;
+        width: 550px;
         background-repeat: no-repeat;
         background-size: cover;
     }
     
     .landpage .card {
         padding: 15px;
-        width: 200px;
+        width: 250px;
     }
 }
 
