@@ -15,7 +15,7 @@ export default function Sidebar() {
   return (
     <div className="sidebar">
       <div className='logo'>
-        <picture><img src="/src/assets/Threads_icon.png" alt="Logo threads" /></picture>
+        <picture><img src="threads/src/assets/Threads_icon.png" alt="Logo threads" /></picture>
 
       </div>
 
