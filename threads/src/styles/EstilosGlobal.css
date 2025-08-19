@@ -36,14 +36,14 @@
 @media (max-width: 968px) {
     .landpage {
         background-image: url('../assets/bckthreads_mble.png'); /* Imagen para móviles */
-        width: 900px;
+        width: 600px;
         background-repeat: no-repeat;
         background-size: cover;
     }
     
     .landpage .card {
         padding: 15px;
-        width: 70%;
+        width: 200px;
     }
 }
 
