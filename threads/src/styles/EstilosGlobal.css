@@ -43,7 +43,7 @@
     
     .landpage .card {
         padding: 15px;
-        max-width: 90%;
+        width: 70%;
     }
 }
 
