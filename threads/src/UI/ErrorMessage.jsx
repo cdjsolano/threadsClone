@@ -1,5 +1,5 @@
 import React from 'react';
-import '../UI/ErrorMessage.css'; // Archivo CSS modular
+import './ErrorMessage.css'; // Archivo CSS modular
 
 export default function ErrorMessage({ error, onRetry }) {
   return (
