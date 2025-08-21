@@ -13,6 +13,7 @@ import Sidebar from './components/Shared/Sidebar'
 import MyComments from './components/Shared/MyComments'
 import NuevoPost from './pages/NuevoPost'
 import Login from './components/Shared/Login'
+import "react-toastify/dist/ReactToastify.css";
 
 
 
