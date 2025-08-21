@@ -397,7 +397,7 @@ body {
 
 
 /* ===== RESPONSIVE ===== */
-@media (max-width: 480px) {
+@media (max-width: 486px) {
     .feed-container {
         max-width: 100%;
     }
@@ -422,7 +422,7 @@ body {
 
   .containerbkg {
     padding: 8px;
-    width: 100%;
+    width: 486px;
   }
 
   .postsList {

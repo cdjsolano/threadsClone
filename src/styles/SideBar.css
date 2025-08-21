@@ -108,8 +108,8 @@
     display: none;
 }
 
-/* Media query para dispositivos móviles (max-width: 786px) */
-@media (max-width: 786px) {
+/* Media query para dispositivos móviles (max-width: 486px) */
+@media (max-width: 486px) {
     .desktop-sidebar {
         display: none;
     }
