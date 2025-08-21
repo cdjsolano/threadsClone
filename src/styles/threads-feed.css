@@ -421,6 +421,21 @@ body {
     }
 }
 
+@media (max-width: 480px) {
+  .containerbkg {
+    padding: 8px;
+  }
+
+  .parati {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  .welcome {
+    max-width: 100%; /* feed ocupa todo el ancho */
+  }
+}
+
 /* ===== ANIMACIONES EXTRA ===== */
 @keyframes fadeIn {
     from {

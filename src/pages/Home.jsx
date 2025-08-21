@@ -1,5 +1,4 @@
 import Feed from "../components/Feed/Feed.jsx";
-import "../styles/EstilosGlobal.css";
 import "../styles/threads-feed.css";
 
 function Home() {
