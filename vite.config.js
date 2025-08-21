@@ -9,7 +9,7 @@ export default defineConfig({
     include: ['lucide-react'], // aquí sí lo toma en cuenta
   },
     rollupOptions: {
-      input: './index.html',
+      input: '#/index.html',
       external: ['react-toastify',
         'react-toastify/dist/ReactToastify.css']
     }
