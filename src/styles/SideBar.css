@@ -94,7 +94,7 @@
     height: 50px;
 }
 
-.logo picture > img {
+.logo picture>img {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -113,40 +113,38 @@
     .desktop-sidebar {
         display: none;
     }
-    
+
     .mobile-sidebar {
-    display: flex;
-    position: fixed;
-    bottom: 0;
-    left: -3px;
-    width: 368px;
-    height: 60px;
-    background-color: #000;
-    border-top: 1px solid #333;
-    justify-content: space-around;
-    align-items: center;
-    z-index: 10000;
-    padding: 0 10px;
-    min-width: 320px;
-    max-width: 486px;
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0px;
+        width: 365px;
+        height: 60px;
+        background-color: #000;
+        border-top: 1px solid #333;
+        justify-content: space-around;
+        align-items: center;
+        z-index: 10000;
+        min-width: 320px;
     }
-    
+
     .mobile-sidebar .sidebar-btn {
         background: transparent;
         padding: 8px;
         border-radius: 50%;
     }
-    
+
     .mobile-sidebar .add-btn {
         width: 32px;
         height: 32px;
     }
-    
+
     /* Ocultar footer en móviles */
     .footer {
         display: none;
     }
-    
+
     /* Reposicionar logo en móviles */
     .logo {
         left: 15px;
@@ -154,10 +152,9 @@
         width: 40px;
         height: 40px;
     }
-    
-    .logo picture > img {
+
+    .logo picture>img {
         width: 40px;
         height: 40px;
     }
 }
-
