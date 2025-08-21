@@ -162,12 +162,13 @@
 /* Ajustes para pantallas muy pequeñas */
 @media (max-width: 360px) {
     .mobile-sidebar {
-        height: 50px;
+        height: 100px;
+        gap: 30px;
     }
     
     .mobile-sidebar .icon {
-        width: 20px;
-        height: 20px;
+        width: 30px;
+        height: 30px;
     }
     
     .mobile-sidebar .add-btn {

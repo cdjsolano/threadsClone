@@ -19,7 +19,7 @@ import Login from './components/Shared/Login'
 function App() {
   const [count, setCount] = useState(0)
   const [showLoader, setShowLoader] = useState(true);
-   const location = useLocation();
+  const location = useLocation();
 
   useEffect(() => {
     // Mostrar el loader por 3 segundos
@@ -34,28 +34,23 @@ function App() {
 
   return (
 
-      
-    <AuthProvider>
-     
-       
-      <PostProvider>
-            {location.pathname !== "/" && location.pathname !== "/login" && <Sidebar />}
+    <>
+      <AuthProvider>
+        <PostProvider>
+          {location.pathname !== "/" && location.pathname !== "/login" && <Sidebar />}
           <Routes>
-             <Route path="/" element={<Loadingpage />} />
-             <Route path="/login" element={<Login />} />
+            <Route path="/" element={<Loadingpage />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/home" element={<Home />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/post/:id" element={<PostDetail />} />
             <Route path="/mycomments" element={<MyComments />} />
             <Route path="/nuevopost" element={<NuevoPost />} />
           </Routes>
-        
-
-        <CommentModal />
-      </PostProvider>
-    </AuthProvider>
-
-
+          <CommentModal />
+        </PostProvider>
+      </AuthProvider>
+    </>
   );
 }
 
