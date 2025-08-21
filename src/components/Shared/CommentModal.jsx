@@ -3,6 +3,7 @@ import { usarPost } from "../../context/PostContext";
 import { useAuth } from "../../context/AuthContext";
 import { supabase } from "../../../supabaseClient.js";
 import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "../../styles/CommentModal.css";
 
 export default function CommentModal() {
