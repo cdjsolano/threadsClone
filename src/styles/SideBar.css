@@ -127,7 +127,8 @@
         align-items: center;
         z-index: 10000;
         padding: 0 10px;
-        min-width: 380px;
+        min-width: 360px;
+        max-width: 486px;
     }
     
     .mobile-sidebar .sidebar-btn {
@@ -164,7 +165,7 @@
 @media (max-width: 360px) {
     .mobile-sidebar {
         height: 100px;
-        gap: 30px;
+        gap: 20px;
     }
     
     .mobile-sidebar .icon {
