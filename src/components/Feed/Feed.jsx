@@ -5,6 +5,7 @@ import Crearpost from "./Crearpost";
 import LoadingSpinner from "../../UI/LoadingSpinner";
 import ErrorMessage from "../../UI/ErrorMessage";
 import { useEffect, useRef } from "react";
+import "../../styles/threads-feed.css"
 
 export function Feed() {
   const { user } = useAuth();

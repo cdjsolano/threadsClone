@@ -397,7 +397,7 @@ body {
 
 
 /* ===== RESPONSIVE ===== */
-@media (max-width: 768px) {
+@media (max-width: 480px) {
     .feed-container {
         max-width: 100%;
     }
@@ -416,18 +416,17 @@ body {
     }
 
     .post-avatar {
-        width: 32px;
-        height: 32px;
+        width: 22px;
+        height: 22px;
     }
-}
 
-@media (max-width: 480px) {
   .containerbkg {
     padding: 8px;
+    width: 100%;
   }
 
   .parati {
-    font-size: 16px;
+    font-size: 14px;
     margin-bottom: 8px;
   }
 
