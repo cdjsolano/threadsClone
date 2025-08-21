@@ -434,10 +434,12 @@ body {
   .parati {
     font-size: 14px;
     margin-bottom: 8px;
+    z-index: 1000;
   }
 
   .welcome {
     max-width: 100%; /* feed ocupa todo el ancho */
+    min-width: 380px;
   }
 }
 

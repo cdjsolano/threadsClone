@@ -127,6 +127,7 @@
         align-items: center;
         z-index: 10000;
         padding: 0 10px;
+        min-width: 380px;
     }
     
     .mobile-sidebar .sidebar-btn {
