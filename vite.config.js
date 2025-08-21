@@ -7,7 +7,7 @@ export default defineConfig({
 
   build: {
     optimizeDeps: {
-      include: ['lucide-react', 'react-toastify']
+      include: ['lucide-react']
     },
     rollupOptions: {
       input: './index.html',
