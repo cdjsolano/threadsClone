@@ -56,11 +56,16 @@ button:focus-visible {
 @media (max-width: 486px) {
 
   body {
+    background-color: black;
+    color: var(--text-primary);
+    font-family: 'SF Pro Display', 'Trebuchet MS', sans-serif;
+    line-height: 1.4;
+    height: auto;
     margin: 0px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-width: 380px;
+    max-width: 380px;
   }
 
 

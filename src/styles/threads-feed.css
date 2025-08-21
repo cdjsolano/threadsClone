@@ -17,15 +17,6 @@
     box-sizing: border-box;
 }
 
-body {
-    background-color: black;
-    color: var(--text-primary);
-    font-family: 'SF Pro Display', 'Trebuchet MS', sans-serif;
-    line-height: 1.4;
-    max-width: 1380px;
-    height: auto;
-}
-
 .containerbkg {
     display: flex;
     flex-direction: column;
