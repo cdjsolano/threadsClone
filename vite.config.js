@@ -6,11 +6,13 @@ export default defineConfig({
   plugins: [react()],
 
   build: {
-     optimizeDeps: {
-       include: ['lucide-react', 'react-toastify']
-     },
-      rollupOptions: {
+    optimizeDeps: {
+      include: ['lucide-react', 'react-toastify']
+    },
+    rollupOptions: {
       input: './index.html'
+      external: ['react-toastify',
+        'react-toastify/dist/ReactToastify.css']
     }
   }
 })
