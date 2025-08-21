@@ -425,6 +425,12 @@ body {
     width: 100%;
   }
 
+  .postsList {
+    width: 460px;
+    position: relative;
+    left: -100px;
+  }
+
   .parati {
     font-size: 14px;
     margin-bottom: 8px;
