@@ -44,7 +44,6 @@
     display: flex;
     position: relative;
     top: 60px;
-    overflow-y: auto;
     background: var(--bg-primary);
     border-radius: 20px;
     border: 0.5px solid #777777;
@@ -452,7 +451,7 @@
 
     .welcome {
         width: 360px;
-        left: -8px;
+        left: 4px;
     }
 }
 
