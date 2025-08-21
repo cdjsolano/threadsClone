@@ -15,7 +15,7 @@ export function Feed() {
   if (error) return <ErrorMessage error={error} />;
 
   return (
-    <div className="feed-container" ref={feedRef} >
+    <div className="feed-container">
       {user && <Crearpost onPostSuccess={refetch} />}
       {posts?.length === 0 ? (
         <div className="emptyFeed">
