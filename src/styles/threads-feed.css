@@ -361,7 +361,6 @@ body {
     justify-content: space-between;
     text-align: justify;
     background: transparent;
-
     padding: 16px 20px;
     position: relative;
     gap: 20px;
@@ -405,6 +404,14 @@ body {
     .post {
         width: 100%;
         padding: 12px 16px;
+    }
+
+    .create-post-trigger {
+        width: fit-content;
+    }
+
+    .trigger-placeholder {
+        font-size: small;
     }
 
     .post-content {
