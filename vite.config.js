@@ -9,7 +9,7 @@ export default defineConfig({
   },
   build: {
      optimizeDeps: {
-       include: ['lucide-react']
+       include: ['lucide-react', 'react-toastify']
      }
   }
 })
