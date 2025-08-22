@@ -61,13 +61,13 @@
     justify-content: center;
     align-items: flex-end;
     padding-bottom: 20px;
-    width: 800px;
+    width: 1356px;
     height: 70px;
-    background: #000;
+    background: var(--bg-primary);
     position: sticky;
     left: 35px;
     top: -2px;
-    z-index: 10000;
+    z-index: 2000;
 }
 
 .feed-container {
