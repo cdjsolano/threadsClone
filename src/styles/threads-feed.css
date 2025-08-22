@@ -59,10 +59,10 @@
 .parati {
     display: flex;
     justify-content: center;
-    align-items: flex-end;
+    align-items: center;
     padding-bottom: 20px;
     width: 1356px;
-    height: 70px;
+    height: 90px;
     background: var(--bg-primary);
     position: sticky;
     left: 35px;
