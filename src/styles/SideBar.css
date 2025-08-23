@@ -2,8 +2,8 @@
 .sidebar {
     position: fixed;
     top: 150px;
-    left: 15px;
-    width: 100%;
+    left: 10px;
+    width: 60px;
     height: 300px;
     background: transparent;
     border: none;
