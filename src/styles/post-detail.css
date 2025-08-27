@@ -137,11 +137,16 @@
 }
 
 @media screen and (max-width: 768px) {
-  .post-detail-container {
-    width: 100%;
-    padding: 12px;
-    left: 0;
-  }
+
+.post-detail {
+  width: 320px;
+}
+
+.post-detail-container {
+  width: 100%;
+  padding: 12px;
+  left: 0;
+}
 
   .post-detail-header {
     flex-direction: column;
