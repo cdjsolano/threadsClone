@@ -96,3 +96,22 @@
     color: #777;
     margin-top: 0.5rem;
 }
+
+@media screen and (max-width: 768px) {
+    .my-comments-container {
+        max-width: 100%;
+        padding: 12px;
+    }
+
+    .post-comments-group {
+        padding: 8px;
+    }
+
+    .original-post {
+        padding: 8px;
+    }
+
+    .comment-item {
+        padding-left: 5px;
+    }
+}
