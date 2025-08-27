@@ -85,7 +85,7 @@ export const Post = memo(({ post, currentUser, onDelete, onCommentAdded }) => {
             <span className="post-username">
               {post.threadUsers?.username || "Usuario"}
             </span>
-            <span className="post-time">{post.created_at}</span>
+            <span className="post-time">{getTimeAgo(post.created_at)}</span>
             {isAuthor && (
               <button
                 onClick={(e) => {
