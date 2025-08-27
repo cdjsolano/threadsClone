@@ -139,7 +139,7 @@
 @media screen and (max-width: 768px) {
 
 .post-detail {
-  width: 320px;
+  width: 300px;
 }
 
 .post-detail-container {
@@ -161,6 +161,7 @@
 
   .comments-section {
     padding: 12px;
+    width: 300px;
   }
 
   .comment-item {
@@ -169,6 +170,11 @@
 
   .comment-item>p {
     padding-left: 0;
+  }
+  
+  .comment-form {
+    width: 300px;
+
   }
 
 .post-detail-textarea {
