@@ -16,6 +16,7 @@ export default function CommentForm({ postId, posts }) {
       post_id: postId,
       user_id: user.id,
       username: user.profile?.username
+      
     });
 
     setContent('');

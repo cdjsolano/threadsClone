@@ -29,7 +29,6 @@ export function Crearpost({ onPostCreated }) {
         <button className="fake-submit">Publicar</button>
       </div>
 
-      {/* 🔹 Modal real con la lógica de crear posts */}
       {isModalOpen && (
         <CreatePostModal
           onClose={() => setIsModalOpen(false)}
