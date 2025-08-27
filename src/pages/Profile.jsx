@@ -35,10 +35,10 @@ export default function Profile() {
         .eq("user_id", user.id)
         .order("created_at", { ascending: false });
 
-      if (postsError) console.error(postsError  );
+      if (postsError) console.error(postsError);
       else setPosts(userPosts);
 
- const count = await getFollowingCount(user.id);  //contador de seguidores.
+      const count = await getFollowingCount(user.id);  //contador de seguidores.
       setFollowingCount(count);
 
       setLoading(false);
@@ -66,9 +66,11 @@ export default function Profile() {
           <h2>{profileData?.username || "Usuario"}</h2>
           <p>{profileData?.fullName || ""}</p>
           <small>{user.email}</small>
-          <p className="following-counter">
-            Siguiendo: {followingCount}
-          </p>
+          <Link to="/following" className="following-link">
+            <p className="following-counter">
+              Siguiendo: {followingCount}
+            </p>
+          </Link>
         </div>
       </div>
 
