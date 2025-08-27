@@ -164,4 +164,10 @@
   .comment-item>p {
     padding-left: 0;
   }
+
+.post-detail-textarea {
+
+  word-break: break-word;
+  justify-content: flex-start;
+}
 }
