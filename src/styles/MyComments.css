@@ -1,8 +1,11 @@
 .my-comments-container {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto;
     max-width: 700px;
     background: transparent;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 12px #00000014;
     font-family: system-ui, sans-serif;
 }
 
@@ -101,6 +104,7 @@
     .my-comments-container {
         max-width: 100%;
         padding: 12px;
+        left: -82px;
     }
 
     .post-comments-group {
