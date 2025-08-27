@@ -17,9 +17,11 @@ export default function Sidebar() {
     <>
       {/* Sidebar para desktop */}
       <div className="sidebar desktop-sidebar">
+        <Link to="/home" className="sidebar-btn" title="Feed">
         <div className='logo'>
           <img src={logothreads} alt="Logo threads" />
         </div>
+        </Link>
 
         <Link to="/home" className="sidebar-btn" title="Feed">
           <House className="icon" />
