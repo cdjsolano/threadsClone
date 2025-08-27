@@ -6,6 +6,7 @@ import LoadingSpinner from "../UI/LoadingSpinner";
 import ErrorMessage from "../UI/ErrorMessage";
 import "../styles/post-detail.css";
 import { ArrowLeft } from "lucide-react"
+import FollowButton from "../components/Shared/FollowButton";
 
 export default function PostDetail() {
   const { id } = useParams();
@@ -26,7 +27,7 @@ export default function PostDetail() {
         // Obtener post
         const { data: postData, error: postError } = await supabase
           .from("post")
-          .select(`*, threadUsers:user_id (fullName, avatar_url)`)
+          .select(`*, threadUsers:user_id (id, fullName, avatar_url)`)
           .eq("id", id)
           .single();
 
@@ -36,7 +37,7 @@ export default function PostDetail() {
         // Obtener comentarios
         const { data: commentsData, error: commentsError } = await supabase
           .from("comments")
-          .select(`*, threadUsers:user_id (fullName, avatar_url)`)
+          .select(`*, threadUsers:user_id (id, fullName, avatar_url)`)
           .eq("post_id", id)
           .order("created_at", { ascending: false });
 
@@ -130,6 +131,7 @@ export default function PostDetail() {
               <span className="post-username">{post.threadUsers?.fullName}</span>
               <span className="post-time">{getTimeAgo(post.created_at)}</span>
             </div>
+            <FollowButton targetUserId={post.threadUsers?.id} />
           </div>
           <div className="post-content-detail">
             <p>{post.content}</p>

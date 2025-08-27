@@ -13,6 +13,7 @@ import Sidebar from './components/Shared/Sidebar'
 import MyComments from './components/Shared/MyComments'
 import NuevoPost from './pages/NuevoPost'
 import Login from './components/Shared/Login'
+import FollowingPage from './pages/FollowingPage'
 import "react-toastify/dist/ReactToastify.css";
 
 
@@ -47,6 +48,7 @@ function App() {
             <Route path="/post/:id" element={<PostDetail />} />
             <Route path="/mycomments" element={<MyComments />} />
             <Route path="/nuevopost" element={<NuevoPost />} />
+            <Route path="/following" element={<FollowingPage />} />
           </Routes>
           <CommentModal />
         </PostProvider>

@@ -5,10 +5,11 @@ import { Post } from "../components/Feed/Post";
 import "../styles/Profile.css"; // 🔹 Estilo propio
 
 export default function Profile() {
-  const { user } = useAuth();
+  const { user, getFollowingCount } = useAuth(); // 👈 usamos la función
   const [profileData, setProfileData] = useState(null);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [followingCount, setFollowingCount] = useState(0); // 👈 estado local
 
   useEffect(() => {
     if (!user) return;
@@ -34,14 +35,17 @@ export default function Profile() {
         .eq("user_id", user.id)
         .order("created_at", { ascending: false });
 
-      if (postsError) console.error(postsError);
+      if (postsError) console.error(postsError  );
       else setPosts(userPosts);
+
+ const count = await getFollowingCount(user.id);  //contador de seguidores.
+      setFollowingCount(count);
 
       setLoading(false);
     };
 
     fetchProfileAndPosts();
-  }, [user]);
+  }, [user, getFollowingCount]);
 
   if (!user) {
     return <p>No has iniciado sesión.</p>;
@@ -62,6 +66,9 @@ export default function Profile() {
           <h2>{profileData?.username || "Usuario"}</h2>
           <p>{profileData?.fullName || ""}</p>
           <small>{user.email}</small>
+          <p className="following-counter">
+            Siguiendo: {followingCount}
+          </p>
         </div>
       </div>
 

@@ -1,0 +1,33 @@
+/* FollowButton.css */
+
+.follow-btn {
+  padding: 6px 14px;
+  border-radius: 9999px; /* estilo pill/redondeado */
+  font-size: 14px;
+  font-weight: 500;
+  transition: opacity 0.2s ease, background-color 0.3s ease;
+  cursor: pointer;
+  border: none;
+}
+
+/* Estado normal */
+.follow-btn.follow {
+  background-color: #2563eb; /* azul */
+  color: white;
+}
+
+.follow-btn.unfollow {
+  background-color: #d1d5db; /* gris claro */
+  color: black;
+}
+
+/* Hover */
+.follow-btn:hover {
+  opacity: 0.85;
+}
+
+/* Estado disabled */
+.follow-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

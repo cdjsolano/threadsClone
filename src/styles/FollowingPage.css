@@ -1,0 +1,86 @@
+/* Fondo oscuro general */
+body {
+  background-color: #121212;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: #e0e0e0;
+}
+
+/* Contenedor centrado */
+.following-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Título */
+.following-title {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+
+/* Lista de usuarios */
+.following-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Item de la lista */
+.following-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background-color: #1e1e1e;
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  transition: background 0.2s ease;
+}
+
+.following-item:hover {
+  background-color: #2a2a2a;
+}
+
+/* Avatar */
+.following-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #333;
+}
+
+/* Nombre */
+.following-name {
+  font-size: 1rem;
+  color: #e0e0e0;
+  font-weight: 500;
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .following-container {
+    padding: 10px;
+  }
+
+  .following-item {
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .following-avatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .following-title {
+    font-size: 1.5rem;
+  }
+
+  .following-name {
+    font-size: 0.95rem;
+  }
+}
