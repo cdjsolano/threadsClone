@@ -1,6 +1,6 @@
 import { memo, useState } from "react";
 import { Heart, Repeat2, MessageCircle, Send } from "lucide-react";
-import { Link } from "react-router-dom"; // 🔹 Nuevo import para navegación
+import { Link } from "react-router-dom"; //  Nuevo import para navegación
 import { supabase } from "../../../supabaseClient";
 import { toast } from "react-toastify";
 import { usarPost } from "../../context/PostContext";
@@ -11,21 +11,21 @@ export const Post = memo(({ post, currentUser, onDelete, onCommentAdded }) => {
   const { selectedPost, setSelectedPost } = usarPost();
   const displayPost = selectedPost?.id === post.id ? selectedPost : post;
 
-  // 🔹 Estado local para el like (solo para UI, no persiste entre recargas)
+  //  Estado local para el like (solo para UI, no persiste entre recargas)
   const [hasLiked, setHasLiked] = useState(false);
-  // 🔹 Estado local para el contador (para respuesta inmediata)
+  //  Estado local para el contador (para respuesta inmediata)
   const [localLikesCount, setLocalLikesCount] = useState(post.likes_count || 0);
 
   const handleLike = async () => {
     try {
-      // 🔹 Calculamos el nuevo valor del contador
+      //  Calculamos el nuevo valor del contador
       const newLikesCount = hasLiked ? localLikesCount - 1 : localLikesCount + 1;
 
-      // 🔹 Actualización optimista de la UI
+      //  Actualización optimista de la UI
       setHasLiked(!hasLiked);
       setLocalLikesCount(newLikesCount);
 
-      // 🔹 Actualización en Supabase
+      //  Actualización en Supabase
       const { error } = await supabase
         .from("post")
         .update({ likes_count: newLikesCount })
@@ -33,14 +33,14 @@ export const Post = memo(({ post, currentUser, onDelete, onCommentAdded }) => {
 
       if (error) throw error;
 
-      // 🔹 Actualizamos el contexto si es necesario
+      //  Actualizamos el contexto si es necesario
       if (selectedPost?.id === post.id) {
         setSelectedPost({ ...selectedPost, likes_count: newLikesCount });
       }
 
       toast.success(hasLiked ? "Like removido" : "¡Me gusta añadido!");
     } catch (error) {
-      // 🔹 Revertimos en caso de error
+      //  Revertimos en caso de error
       setHasLiked(hasLiked);
       setLocalLikesCount(localLikesCount);
       console.error("Error al actualizar like:", error.message);
@@ -77,7 +77,7 @@ export const Post = memo(({ post, currentUser, onDelete, onCommentAdded }) => {
   
   return (
     <div className="post">
-      {/* 🔹 Envolvemos el header y el contenido en <Link> para ir al detalle */}
+      {/*  Envolvemos el header y el contenido en <Link> para ir al detalle */}
       <Link
         to={`/post/${post.id}`}
         style={{ textDecoration: "none", color: "inherit", width: "400px" }}
@@ -96,7 +96,7 @@ export const Post = memo(({ post, currentUser, onDelete, onCommentAdded }) => {
             {isAuthor && (
               <button
                 onClick={(e) => {
-                  e.preventDefault(); // 🔹 Evita que el click en este botón dispare la navegación
+                  e.preventDefault(); //  Evita que el click en este botón dispare la navegación
                   handleDelete();
                 }}
                 className="delete-button"
@@ -131,7 +131,7 @@ export const Post = memo(({ post, currentUser, onDelete, onCommentAdded }) => {
         </div>
       </Link>
 
-      {/* 🔹 Acciones que NO deben redirigir */}
+      {/*  Acciones que NO deben redirigir */}
       <div className="post-actions">
         <button
           className="post-action"
@@ -139,18 +139,18 @@ export const Post = memo(({ post, currentUser, onDelete, onCommentAdded }) => {
             e.preventDefault();
             handleLike();
           }}
-          // 🔹 Estilo condicional para el botón de like
+          //  Estilo condicional para el botón de like
           style={{
             color: hasLiked ? 'red' : 'inherit',
-            cursor: currentUser ? 'pointer' : 'not-allowed' // 🔹 Deshabilitar si no hay usuario
+            cursor: currentUser ? 'pointer' : 'not-allowed' //  Deshabilitar si no hay usuario
           }}
-          disabled={!currentUser} // 🔹 Deshabilitar botón si no hay usuario logueado
+          disabled={!currentUser} //  Deshabilitar botón si no hay usuario logueado
           title={!currentUser ? "Inicia sesión para dar like" : ""}
         >
-          {/* 🔹 Cambiamos el emoji basado en hasLiked */}
+          {/*  Cambiamos el emoji basado en hasLiked */}
           <span className="emoji">{hasLiked ? <Heart className="iconos-post-action liked" />
             : <Heart className="iconos-post-action" />}</span>
-          {/* 🔹 Usamos el contador local para respuesta inmediata */}
+          {/*  Usamos el contador local para respuesta inmediata */}
           {localLikesCount}
         </button>
 

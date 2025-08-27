@@ -53,7 +53,7 @@ export default function PostDetail() {
     fetchData();
   }, [id]);
 
-  // 🔹 Suscripción realtime para comentarios nuevos
+  // Suscripción realtime para comentarios nuevos
   useEffect(() => {
     const channel = supabase
       .channel("comments_realtime")
@@ -61,7 +61,7 @@ export default function PostDetail() {
         "postgres_changes",
         { event: "INSERT", schema: "public", table: "comments", filter: `post_id=eq.${id}` },
         (payload) => {
-          // ✅ CAMBIO 1: Insertar al inicio en vez de al final
+          
           setComments((prev) => [payload.new, ...prev]);
         }
       )
@@ -98,12 +98,12 @@ export default function PostDetail() {
     }).select(`
       *, 
       threadUsers:user_id (fullName, avatar_url)
-    `).single(); // ✅ Para traer el usuario también
+    `).single(); 
 
     if (error) {
       console.error("Error al enviar comentario:", error.message);
     } else {
-      // ✅ CAMBIO 2: Insertar arriba inmediatamente
+      
       setComments((prev) => [data, ...prev]);
       setNewComment("");
     }

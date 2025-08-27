@@ -165,13 +165,13 @@
   }
 
   .comment-item {
-    grid-template-columns: auto auto;
-  }
-
-  .comment-item>p {
     padding-left: 10px;
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .comment-item>p {
+    word-wrap: break-word;
   }
   
   .comment-form {
@@ -181,7 +181,7 @@
 
 .post-detail-textarea {
 
-  word-break: break-word;
+  word-wrap:  break-word;
   justify-content: flex-start;
 }
 }

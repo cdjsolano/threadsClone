@@ -30,3 +30,23 @@
   width: 700px;
   gap: 12px;
 }
+@media screen and (max-width: 768px) {
+  .profile-container {
+    display: grid;
+    grid-template-columns: auto;
+    width: 100%;
+    position: absolute;
+    left: 0px;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    left: 0px;
+  }
+
+  .posts-list {
+    width: 100%;
+    left: 0px;
+  }
+
+
+}
