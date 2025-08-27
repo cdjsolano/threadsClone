@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "../../supabaseClient";
 import { useAuth } from "../context/AuthContext";
 import "../styles/FollowingPage.css";
@@ -7,6 +8,7 @@ import { ArrowLeft } from "lucide-react"
 export default function FollowingPage() {
     const { user } = useAuth();
     const [following, setFollowing] = useState([]);
+      const navigate = useNavigate();
 
     useEffect(() => {
         const loadFollowing = async () => {
