@@ -35,8 +35,10 @@
 
 @media (max-width: 768px) {
     .landpage {
+        display: flex;
+        justify-content: center;
         background-image: url('../assets/bckthreads_mble.png'); /* Imagen para móviles */
-        width: 550px;
+        width: 100%;
         background-repeat: no-repeat;
         background-size: cover;
     }

@@ -1,4 +1,4 @@
-// CreatePost.jsx
+
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import CreatePostModal from "../Shared/CreatePostModal"; // 🔹 Importamos el modal real
